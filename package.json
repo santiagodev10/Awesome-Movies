@@ -1,0 +1,19 @@
+{
+  "name": "awesome-movies",
+  "version": "1.0.0",
+  "description": "A simple movie website",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/santiagodev10/Awesome-Movies.git"
+  },
+  "author": "@santiagodev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/santiagodev10/Awesome-Movies/issues"
+  },
+  "homepage": "https://github.com/santiagodev10/Awesome-Movies#readme"
+}
