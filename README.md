@@ -1,2 +1,2 @@
 # Awesome-Movies
-A simple movie website 
+A movie website 
