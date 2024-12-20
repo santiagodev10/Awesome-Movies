@@ -3,12 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./images/awesome-movies-logo.png">
     <link rel="stylesheet" href="./styles/app.css">
     <script src="./src/secrets.js" defer></script>
     <script src="./src/main.js" defer></script>
     <title>Awesome Movies</title>
 </head>
 <body>
-    <h1>Awesome Movies</h1>
+    <header>
+        <nav>
+            <figure class="logo">
+                <img src="./images/awesome-movies-logo.png" alt="Awesome-Movies-Logo">
+            </figure>
+            <ul class="nav-links">
+                <li><a href="#trending">Trending</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#upcoming">Upcoming</a></li>
+                <li><a href="#search">Search</a></li>
+            </ul>
+            <figure class="search">
+                <img src="./images/search-icon.png" alt="search-icon">
+            </figure>
+        </nav>
+    </header>
+    <main>
+        <section class="trending" id="trending">
+            <h2>Trending</h2>
+        </section>
+        <section class="categories" id="categories">
+            <h2>Categories</h2>
+        </section>
+        <section class="upcoming" id="upcoming">
+            <h2>Upcoming</h2>
+        </section>
+    </main>
+    <footer>
+        <p>All rights reserved</p>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,21 @@
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+/*Añadir el :root para las variables con los colores y los tamaños de fuente*/
+
+body {
+    background-color: #001253;
+}
+
+.logo img {
+    width: 30px;
+}
