@@ -1,5 +1,6 @@
 html {
     font-size: 62.5%;
+    font-family: "Nunito", sans-serif;
 }
 
 * {
@@ -18,7 +19,6 @@ html {
 }
 
 body {
-    height: 100vh;
     background: rgb(2,0,36);
     background: linear-gradient(180deg, rgba(2,0,36,1) 12%, rgba(9,9,121,1) 100%, rgba(25,0,255,1) 100%);
 }
@@ -74,4 +74,8 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 100px;
+}
+
+.trending {
+    color: white;
 }
