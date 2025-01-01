@@ -1,6 +1,5 @@
 html {
     font-size: 62.5%;
-    font-family: "Nunito", sans-serif;
 }
 
 * {
@@ -9,6 +8,7 @@ html {
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
+    font-family: "Nunito", sans-serif;
 }
 
 /*Añadir el :root para las variables con los colores y los tamaños de fuente*/
@@ -77,5 +77,61 @@ main {
 }
 
 .trending {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     color: white;
 }
+
+.trending h2 {
+    font-size: 2rem;
+}
+
+.trending__movies {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.trending__movies .movies__movie-container {
+    flex-shrink: 0;
+    scroll-snap-align: center;
+}
+
+.trending__movies .container__poster {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.container__poster .poster__image {
+    width: 100%;
+    border-radius: 10px;
+    scroll-snap-align: center;
+}
+
+.movies__title {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.movies__description {
+    font-size: 1.6rem;
+    overflow-x: scroll;
+}
+
+.movies__movie-container p {
+    font-size: 1.6rem;
+}
+
+
+
+
+/*la descripcion de la pelicula debe tener overflow scroll horizontal, para que el texto no caiga hasta abajo y quite espacio*/
