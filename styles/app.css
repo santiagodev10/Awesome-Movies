@@ -49,7 +49,7 @@ nav .nav-links-container {
 
 .nav-links-container .menu-icon {
     width: 35px;
-    height: 2px;
+    height: 3px;
     background-color: var(--middle-blue);
     margin: 6px 0;
 }
@@ -152,17 +152,31 @@ main {
     text-align: center;
 }
 
-.categories__container {   
+.categories__categories-container {   
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    padding: 20px;
+    color: white;
+    gap: 20px;
+}
+
+.categories-container__category {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.categories-container__title {
+    font-size: 1.6rem;
     color: white;
 }
 
-.categories__image-container {
+/* .categories-container__image-container {
     width: 100%;
-}
+} */
 
-.categories__image-container img {
-    width: 50vw;
+.categories-container__image-container img {
     border-radius: 10px;
 }

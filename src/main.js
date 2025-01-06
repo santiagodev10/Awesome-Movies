@@ -34,3 +34,36 @@ async function getTrendingMoviesPreview() {
 }
 
 getTrendingMoviesPreview();
+
+async function getCategoriesPreview() {
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`,	
+        },
+    };
+    const response = await fetch("https://api.themoviedb.org/3/genre/movie/list", options);
+    const data = await response.json();
+    const categories = data.genres;
+    console.log(categories);
+    
+    categories.forEach((category) => {
+        const categoriesContainer = document.querySelector(".categories__categories-container");
+        const categoryContainer = document.createElement("div");
+        const categoryTitle = document.createElement("h3");
+        const imageContainer = document.createElement("figure");
+        const categoryImage = document.createElement("img");
+        categoryContainer.classList.add("categories-container__category");
+        categoryTitle.classList.add("categories-container__title");
+        imageContainer.classList.add("categories-container__image-container");
+        categoryTitle.textContent = category.name;
+        categoryImage.src = "./../images/movie-icon.png";
+        categoryImage.alt = category.name;
+        categoriesContainer.appendChild(categoryContainer);
+        categoryContainer.append(imageContainer, categoryTitle);
+        imageContainer.appendChild(categoryImage);
+    });
+}
+
+getCategoriesPreview();
