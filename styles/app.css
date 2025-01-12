@@ -34,6 +34,7 @@ nav {
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
+    position: relative;
 }
 
 nav .logo {
@@ -55,7 +56,19 @@ nav .nav-links-container {
 }
 
 nav .nav-links {
-    display: none;
+    width: 78%;
+    position: absolute;
+    margin-top: 20px;
+    padding: 10px;
+    border-top: white 2px solid;
+    border-radius: 10px;
+    background-color: rgb(98, 0, 255);
+}
+
+.li-container__link {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
 }
 
 nav .search {
@@ -179,4 +192,12 @@ main {
 
 .categories-container__image-container img {
     border-radius: 10px;
+}
+
+.active {
+    display: block;
+}
+
+.inactive {
+    display: none;
 }

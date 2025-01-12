@@ -1,5 +1,18 @@
 window.addEventListener("DOMContentLoaded", navigator);
 window.addEventListener("hashchange", navigator);
+nav.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if(target.closest('.logo')) {
+        console.log("LOGO");
+    } else if(target.closest('.nav-links-container')) {
+        console.log("NAV LINKS");
+        navLinks.classList.toggle("inactive");
+        navLinks.classList.toggle("active");
+    } else if(target.closest('.search')) {
+        console.log("SEARCH");
+    }
+})
 
 function navigator() {
     console.log( {location} );
