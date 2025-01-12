@@ -33,8 +33,6 @@ async function getTrendingMoviesPreview() {
     });
 }
 
-getTrendingMoviesPreview();
-
 async function getCategoriesPreview() {
     const { data } = await apiBaseURL("genre/movie/list");
     const categories = data.genres;
@@ -57,5 +55,3 @@ async function getCategoriesPreview() {
         imageContainer.appendChild(categoryImage);
     });
 }
-
-getCategoriesPreview();
