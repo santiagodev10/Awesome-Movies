@@ -63,6 +63,7 @@ function homePage () {
     console.log("HOME");
     getTrendingMoviesPreview();
     getCategoriesPreview();
+    getUpcomingMoviesPreview();
 }
 
 function trendsPage () {

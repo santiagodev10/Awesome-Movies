@@ -55,3 +55,29 @@ async function getCategoriesPreview() {
         imageContainer.appendChild(categoryImage);
     });
 }
+
+async function getUpcomingMoviesPreview() {
+    const { data } = await apiBaseURL("movie/upcoming");
+    const upcomingMovies = data.results;
+    console.log(upcomingMovies);
+    upcomingMovies.forEach((movie) => {
+        const upcomingMoviesSection = document.querySelector(".upcoming__movies");
+        const movieContainer = document.createElement("div");
+        const movieImageContainer = document.createElement("figure");
+        const moviePoster = document.createElement("img");
+        const movieTitle = document.createElement("h3");
+        const movieDescription = document.createElement("p");
+        movieContainer.classList.add("movies__movie-container");
+        movieImageContainer.classList.add("container__poster");
+        moviePoster.classList.add("poster__image");
+        moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
+        moviePoster.alt = movie.title;
+        movieTitle.classList.add("movies__info");
+        movieTitle.textContent = movie.title;
+        movieDescription.classList.add("movies__info");
+        // movieDescription.textContent = movie.overview;
+        upcomingMoviesSection.appendChild(movieContainer);
+        movieContainer.append(movieImageContainer, movieTitle, movieDescription);  
+        movieImageContainer.appendChild(moviePoster);
+    });
+}
