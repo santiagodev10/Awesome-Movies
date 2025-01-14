@@ -20,7 +20,7 @@ html {
 
 body {
     background: rgb(2,0,36);
-    background: linear-gradient(180deg, rgba(2,0,36,1) 12%, rgba(9,9,121,1) 100%, rgba(25,0,255,1) 100%);
+    /* background: linear-gradient(180deg, rgba(2,0,36,1) 12%, rgba(9,9,121,1) 100%, rgba(25,0,255,1) 100%); */
 }
 
 header {
@@ -253,4 +253,21 @@ main {
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+}
+
+/*FOOTER SECTION*/
+
+footer {
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    background: steelblue;
+    color: white;
+}
+
+footer p {
+    font-size: 1.2rem;
 }
