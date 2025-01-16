@@ -1,0 +1,31 @@
+.specific-category-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    gap: 20px;
+}
+
+.specific-category-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(90px, 150px));
+    grid-auto-rows: auto;
+    gap: 10px;
+}
+
+.specific-category-title {
+    width: 100%;
+}
+
+.specific-category-container__movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movie__image {
+    width: 100%;
+    border-radius: 5px;
+}

@@ -80,4 +80,7 @@ function movieDetailsPage () {
 
 function categoriesPage () {    
     console.log("CATEGORIES");
+    // trending.classList.add("inactive");
+    // categories.classList.add("inactive");
+    // upcoming.classList.add("inactive");
 }

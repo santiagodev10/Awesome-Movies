@@ -120,6 +120,8 @@ main {
     gap: 20px;
 }
 
+/*TRENDING SECTION HOME*/
+
 .trending {
     display: flex;
     flex-direction: column;
@@ -177,7 +179,7 @@ main {
 
 /*la descripcion de la pelicula debe tener overflow scroll horizontal, para que el texto no caiga hasta abajo y quite espacio*/
 
-/*CATEGORIES SECTION*/
+/*CATEGORIES SECTION HOME*/
 
 .categories {
     width: 100%;
@@ -222,15 +224,7 @@ main {
     border-radius: 10px;
 }
 
-.active {
-    display: block;
-}
-
-.inactive {
-    display: none;
-}
-
-/*UPCOMING SECTION*/
+/*UPCOMING SECTION HOME*/
 
 .upcoming {
     display: flex;
@@ -270,4 +264,12 @@ footer {
 
 footer p {
     font-size: 1.2rem;
+}
+
+.active {
+    display: block;
+}
+
+.inactive {
+    display: none;
 }
