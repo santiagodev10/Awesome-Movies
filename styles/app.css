@@ -133,6 +133,7 @@ main {
     width: 100vw;
     display: flex;
     gap: 20px;
+    padding-right: 20px;
     padding-left: 50px;
     overflow-x: scroll;
     overscroll-behavior-x: contain;
@@ -236,6 +237,7 @@ main {
     width: 100vw;
     display: flex;
     gap: 20px;
+    padding-right: 20px;
     padding-left: 50px;
     overflow-x: scroll;
     overscroll-behavior-x: contain;
