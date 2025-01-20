@@ -11,7 +11,6 @@ async function getTrendingMoviesPreview() {
     const movies = data.results;
     console.log(movies);
     movies.forEach((movie) => {
-        const trendingMoviesSection = document.querySelector(".trending__movies");
         const movieContainer = document.createElement("div");
         const movieImageContainer = document.createElement("figure");
         const moviePoster = document.createElement("img");
@@ -26,7 +25,7 @@ async function getTrendingMoviesPreview() {
         movieTitle.textContent = movie.title;
         movieDescription.classList.add("movies__info");
         // movieDescription.textContent = movie.overview;
-        trendingMoviesSection.appendChild(movieContainer);
+        trendingMovies.appendChild(movieContainer);
         movieContainer.append(movieImageContainer, movieTitle, movieDescription);  
         movieImageContainer.appendChild(moviePoster);
 
@@ -38,7 +37,6 @@ async function getCategoriesPreview() {
     const categoriesData = data.genres;
     console.log(categories);
     categoriesData.forEach((category) => {
-        const categoriesContainer = document.querySelector(".categories__categories-container");
         const categoryContainer = document.createElement("div");
         const categoryTitle = document.createElement("h3");
         const imageContainer = document.createElement("figure");
@@ -57,10 +55,9 @@ async function getCategoriesPreview() {
 
 async function getUpcomingMoviesPreview() {
     const { data } = await apiBaseURL("movie/upcoming");
-    const upcomingMovies = data.results;
-    console.log(upcomingMovies);
-    upcomingMovies.forEach((movie) => {
-        const upcomingMoviesSection = document.querySelector(".upcoming__movies");
+    const upcomingMoviesData = data.results;
+    console.log(upcomingMoviesData);
+    upcomingMoviesData.forEach((movie) => {
         const movieContainer = document.createElement("div");
         const movieImageContainer = document.createElement("figure");
         const moviePoster = document.createElement("img");
@@ -75,7 +72,7 @@ async function getUpcomingMoviesPreview() {
         movieTitle.textContent = movie.title;
         movieDescription.classList.add("movies__info");
         // movieDescription.textContent = movie.overview;
-        upcomingMoviesSection.appendChild(movieContainer);
+        upcomingMovies.appendChild(movieContainer);
         movieContainer.append(movieImageContainer, movieTitle, movieDescription);  
         movieImageContainer.appendChild(moviePoster);
     });

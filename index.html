@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="icon" href="./images/awesome-movies-logo.png">
+    <link rel="stylesheet" href="./styles/section-styles.css">
     <link rel="stylesheet" href="./styles/app.css">
-    <link rel="stylesheet" href="./styles/categories-page.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
     <script src="./src/secrets.js" defer></script>
     <script src="./src/nodes.js" defer></script>
@@ -52,68 +52,44 @@
     </header>
     <main>
         <section class="trending" id="trending">
-            <h2>Trending</h2>
+            <div class="section-title-container">
+                <h2 class="section-title">Trending</h2>
+                <button class="trending-button see-more-button">See more</button>
+            </div>
             <article class="trending__movies"></article>
         </section>
         <section class="categories" id="categories">
             <h2>Categories</h2>
-            <article class="categories__categories-container">
-                <!-- <div class="categories-container__category">
-                    <h3>Action</h3>
-                    <figure class="categories-container__image-container">
-                        <img src="./images/movie-icon.png" alt="action-movie-icon">
-                    </figure>
-                </div> -->
-            </article>
+            <article class="categories__categories-container"></article>
         </section>
         <section class="upcoming" id="upcoming">
-            <h2>Upcoming</h2>
+            <div class="section-title-container">
+                <h2 class="section-title">Upcoming</h2>
+                <button class="upcoming-button see-more-button">See more</button>
+            </div>
             <article class="upcoming__movies"></article>
         </section>
 
-        <section class="specific-category-page">
-            <div class="specific-category-title">
-                <h2>Specific Category</h2>
+        <section class="specific-category-page section-page">
+            <div class="specific-category-title-container title-container">
+                <h2 class="specific-category-title title-page">Specific Category</h2>
             </div>
-            <article class="specific-category-container">
-                <div class="specific-category-container__movie">
+            <article class="specific-category-container movies-container">
+                <div class="specific-category-container__movie specific-movie-container">
                     <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
                     <h3>Movie name</h3>
                 </div>
+            </article>
+        </section>
 
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
-                </div>
-
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
-                </div>
-
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
-                </div>
-
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
-                </div>
-
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
-                </div>
-
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
-                </div>
-
-                <div class="specific-category-container__movie">
-                    <img src="./images/deadpool-poster.jpg" alt="" class="movie__image">
-                    <h3>Movie name</h3>
+        <section class="trends-page section-page">
+            <div class="title-container">
+                <h2 class="title-page">Movies</h2>
+            </div>
+            <article class="movies-container">
+                <div class="specific-movie-container">
+                    <img src="/images/action-movie-image.webp" alt="" class="movie__image">
+                    <h3>Movie</h3>
                 </div>
             </article>
         </section>

@@ -16,13 +16,18 @@ const footer = document.querySelector("footer");
 //Trending
 const trending = document.querySelector(".trending");
 const trendingMovies = document.querySelector(".trending__movies");
+const trendingButton = document.querySelector(".trending-button");
 //Categories
 const categories = document.querySelector(".categories");
 const categoriesContainer = document.querySelector(".categories__categories-container");
 //Upcoming
 const upcoming = document.querySelector(".upcoming");
 const upcomingMovies = document.querySelector(".upcoming__movies");
+const upcomingButton = document.querySelector(".upcoming-button");
 //CATEGORIES PAGE
 const specificCategoryPage = document.querySelector(".specific-category-page");
+const specificCategoryTitleContainer = document.querySelector(".specific-category-title-container");
 const specificCategoryTitle = document.querySelector(".specific-category-title");
 const specificCategoryContainer = document.querySelector(".specific-category-container");
+//TRENDS PAGE
+const trendsPageSection = document.querySelector(".trends-page");
