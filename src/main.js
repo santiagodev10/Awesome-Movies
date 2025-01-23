@@ -36,7 +36,7 @@ async function getTrendingMoviesPreview() {
 async function getCategoriesPreview() {
     const { data } = await apiBaseURL("genre/movie/list");
     const categoriesData = data.genres;
-    console.log(categories);
+    console.log(categoriesData);
     categoriesContainer.innerHTML = "";
     categoriesData.forEach((category) => {
         const categoryContainer = document.createElement("div");
@@ -47,12 +47,38 @@ async function getCategoriesPreview() {
         categoryTitle.classList.add("categories-container__title");
         imageContainer.classList.add("categories-container__image-container");
         categoryTitle.textContent = category.name;
+        categoryTitle.id = category.id;
         categoryImage.src = "./../images/movie-icon.png";
         categoryImage.alt = category.name;
         categoriesContainer.appendChild(categoryContainer);
         categoryContainer.append(imageContainer, categoryTitle);
         imageContainer.appendChild(categoryImage);
     });
+}
+
+async function getMoviesByCategory(id) {
+    try {
+        specificCategoryContainer.innerHTML = "";
+        const { data } = await apiBaseURL("discover/movie", {
+            params: {
+                with_genres: id,
+            }
+        });
+        const categoryData = data.results;
+        console.log(categoryData);
+        categoryData.forEach((movie) => {
+            const movieContainer = document.createElement("div");
+            const moviePoster = document.createElement("img");
+            movieContainer.classList.add("specific-movie-container");
+            moviePoster.classList.add("movie__image");
+            moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
+            moviePoster.alt = movie.title;
+            specificCategoryContainer.appendChild(movieContainer);
+            movieContainer.append(moviePoster);  
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function getUpcomingMoviesPreview() {

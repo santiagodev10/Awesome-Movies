@@ -8,8 +8,8 @@ categoriesContainer.addEventListener("click", (event) => {
 
     if (target.closest(".categories-container__category")) {
         const categoryTitle = target.closest(".categories-container__title");
-        specificCategoryTitle.textContent = categoryTitle.textContent;
-        location.hash = `#category=${categoryTitle.textContent}`
+        // specificCategoryTitle.textContent = categoryTitle.textContent;
+        location.hash = `#category=${categoryTitle.id}-${categoryTitle.textContent}`;
     }
 })
 headerLogo.addEventListener("click", () => {
@@ -108,5 +108,16 @@ function categoriesPage () {
     trending.classList.add("inactive");
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
+    trendsPageSection.classList.add("inactive");
     specificCategoryPage.classList.remove("inactive");
+
+    location.hash.split("=").forEach((category) => {
+        const [id, name] = category.split("-");
+        console.log(id);
+        //las URLs no pueden tener espacios vacios, por eso cuando se encuentra con uno, lo reemplaza por %20, por eso se usa decodeURI para que lo convierta a un espacio vacio de nuevo
+        const formattedTitle = decodeURI(name);
+        specificCategoryTitle.textContent = formattedTitle;
+        
+        getMoviesByCategory(id);
+    });
 }
