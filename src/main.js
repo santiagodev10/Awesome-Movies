@@ -6,39 +6,52 @@ const apiBaseURL = axios.create({
     },
 })
 
-async function getTrendingMoviesPreview() {
-    const { data } = await apiBaseURL("trending/movie/day");
-    const movies = data.results;
-    console.log(movies);
-    trendingMovies.innerHTML = "";
+//Helpers
+function createMoviesForHome(movies, container) {
+    container.innerHTML = "";
     movies.forEach((movie) => {
         const movieContainer = document.createElement("div");
-        const movieImageContainer = document.createElement("figure");
+        const moviePosterContainer = document.createElement("figure");
         const moviePoster = document.createElement("img");
         const movieTitle = document.createElement("h3");
-        const movieDescription = document.createElement("p");
-        movieContainer.classList.add("movies__movie-container");
-        movieImageContainer.classList.add("container__poster");
-        moviePoster.classList.add("poster__image");
+        movieContainer.classList.add("movie-container");
+        moviePosterContainer.classList.add("container__poster");
+        moviePoster.classList.add("movie-image");
+        movieTitle.classList.add("movies-info");
         moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
         moviePoster.alt = movie.title;
-        movieTitle.classList.add("movies__info");
         movieTitle.textContent = movie.title;
-        movieDescription.classList.add("movies__info");
-        // movieDescription.textContent = movie.overview;
-        trendingMovies.appendChild(movieContainer);
-        movieContainer.append(movieImageContainer, movieTitle, movieDescription);  
-        movieImageContainer.appendChild(moviePoster);
-
+        container.appendChild(movieContainer);
+        movieContainer.append(moviePosterContainer, movieTitle);
+        moviePosterContainer.appendChild(moviePoster);  
     });
 }
 
-async function getCategoriesPreview() {
-    const { data } = await apiBaseURL("genre/movie/list");
-    const categoriesData = data.genres;
-    console.log(categoriesData);
+function createMoviesForPages(movies, container) {
+    //No me funciona el container.innerHTML = "";, porque me esta pasando el mismo problema de antes, que se borra todo el contenido de la pagina
+    // container.innerHTML = "";
+
+    movies.forEach((movie) => {
+        const movieContainer = document.createElement("div");
+        const moviePosterContainer = document.createElement("figure");
+        const moviePoster = document.createElement("img");
+        const movieTitle = document.createElement("h3");
+        movieContainer.classList.add("movie-container");
+        moviePosterContainer.classList.add("poster-container");
+        moviePoster.classList.add("movie-image");
+        movieTitle.classList.add("movies-info");
+        moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
+        moviePoster.alt = movie.title;
+        movieTitle.textContent = movie.title;
+        container.appendChild(movieContainer);
+        movieContainer.append(moviePosterContainer, movieTitle);
+        moviePosterContainer.appendChild(moviePoster);  
+    });
+}
+
+function createCategories(categories, container) {
     categoriesContainer.innerHTML = "";
-    categoriesData.forEach((category) => {
+    categories.forEach((category) => {
         const categoryContainer = document.createElement("div");
         const categoryTitle = document.createElement("h3");
         const imageContainer = document.createElement("figure");
@@ -50,59 +63,42 @@ async function getCategoriesPreview() {
         categoryTitle.id = category.id;
         categoryImage.src = "./../images/movie-icon.png";
         categoryImage.alt = category.name;
-        categoriesContainer.appendChild(categoryContainer);
+        container.appendChild(categoryContainer);
         categoryContainer.append(imageContainer, categoryTitle);
         imageContainer.appendChild(categoryImage);
     });
 }
+//API calls
+
+async function getTrendingMoviesPreview() {
+    const { data } = await apiBaseURL("trending/movie/day");
+    const movies = data.results;
+    console.log(movies);
+    createMoviesForHome(movies, trendingMovies);
+}
+
+async function getCategoriesPreview() {
+    const { data } = await apiBaseURL("genre/movie/list");
+    const categoriesData = data.genres;
+    console.log(categoriesData);
+    createCategories(categoriesData, categoriesContainer);
+}
 
 async function getMoviesByCategory(id) {
-    try {
-        specificCategoryContainer.innerHTML = "";
-        const { data } = await apiBaseURL("discover/movie", {
-            params: {
-                with_genres: id,
-            }
-        });
-        const categoryData = data.results;
-        console.log(categoryData);
-        categoryData.forEach((movie) => {
-            const movieContainer = document.createElement("div");
-            const moviePoster = document.createElement("img");
-            movieContainer.classList.add("specific-movie-container");
-            moviePoster.classList.add("movie__image");
-            moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
-            moviePoster.alt = movie.title;
-            specificCategoryContainer.appendChild(movieContainer);
-            movieContainer.append(moviePoster);  
-        });
-    } catch (error) {
-        console.log(error);
-    }
+    specificCategoryContainer.innerHTML = "";
+    const { data } = await apiBaseURL("discover/movie", {
+        params: {
+            with_genres: id,
+        }
+    });
+    const categoryData = data.results;
+    console.log(categoryData);
+    createMoviesForPages(categoryData, specificCategoryContainer);
 }
 
 async function getUpcomingMoviesPreview() {
     const { data } = await apiBaseURL("movie/upcoming");
     const upcomingMoviesData = data.results;
     console.log(upcomingMoviesData);
-    upcomingMovies.innerHTML = "";
-    upcomingMoviesData.forEach((movie) => {
-        const movieContainer = document.createElement("div");
-        const movieImageContainer = document.createElement("figure");
-        const moviePoster = document.createElement("img");
-        const movieTitle = document.createElement("h3");
-        const movieDescription = document.createElement("p");
-        movieContainer.classList.add("movies__movie-container");
-        movieImageContainer.classList.add("container__poster");
-        moviePoster.classList.add("poster__image");
-        moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
-        moviePoster.alt = movie.title;
-        movieTitle.classList.add("movies__info");
-        movieTitle.textContent = movie.title;
-        movieDescription.classList.add("movies__info");
-        // movieDescription.textContent = movie.overview;
-        upcomingMovies.appendChild(movieContainer);
-        movieContainer.append(movieImageContainer, movieTitle, movieDescription);  
-        movieImageContainer.appendChild(moviePoster);
-    });
+    createMoviesForHome(upcomingMoviesData, upcomingMovies);
 }
