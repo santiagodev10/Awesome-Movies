@@ -84,8 +84,15 @@ async function getCategoriesPreview() {
     createCategories(categoriesData, categoriesContainer);
 }
 
+async function getUpcomingMoviesPreview() {
+    const { data } = await apiBaseURL("movie/upcoming");
+    const upcomingMoviesData = data.results;
+    console.log(upcomingMoviesData);
+    createMoviesForHome(upcomingMoviesData, upcomingMovies);
+}
+
 async function getMoviesByCategory(id) {
-    specificCategoryContainer.innerHTML = "";
+    moviesContainer.innerHTML = "";
     const { data } = await apiBaseURL("discover/movie", {
         params: {
             with_genres: id,
@@ -93,12 +100,17 @@ async function getMoviesByCategory(id) {
     });
     const categoryData = data.results;
     console.log(categoryData);
-    createMoviesForPages(categoryData, specificCategoryContainer);
+    createMoviesForPages(categoryData, moviesContainer);
 }
 
-async function getUpcomingMoviesPreview() {
-    const { data } = await apiBaseURL("movie/upcoming");
-    const upcomingMoviesData = data.results;
-    console.log(upcomingMoviesData);
-    createMoviesForHome(upcomingMoviesData, upcomingMovies);
+async function getMoviesBySearch(query) {
+    moviesContainer.innerHTML = "";
+    const { data } = await apiBaseURL("search/movie", {
+        params: {
+            query,
+        }
+    });
+    const searchData = data.results;
+    console.log(searchData);
+    createMoviesForPages(searchData, moviesContainer);
 }

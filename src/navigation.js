@@ -34,7 +34,9 @@ nav.addEventListener("click", (event) => {
         const closeButtonBar3 = document.createElement("div");
         headerLogo.classList.toggle("inactive");
         navLinksContainer.classList.toggle("inactive");
+        searchInput.type = "search";
         searchInput.classList.add("search__input");
+        searchInput.id = "search-input";
         searchInput.placeholder = "Search for a movie";
         closeButtonContainer.classList.add("search__close");
         closeButtonContainer.classList.toggle("change");
@@ -54,6 +56,14 @@ nav.addEventListener("click", (event) => {
             headerLogo.classList.toggle("inactive");
             navLinksContainer.classList.toggle("inactive");
             searchButton.classList.toggle("inactive");
+        });
+
+        searchInput.addEventListener("keydown", (event) => {
+            if(event.key === "Enter") {
+                console.log("ENTER");
+                event.preventDefault();
+                location.hash = `#search=${searchInput.value}`;
+            }
         });
     }
 })
@@ -81,7 +91,8 @@ function homePage () {
     trending.classList.remove("inactive");
     categories.classList.remove("inactive");
     upcoming.classList.remove("inactive");
-    specificCategoryPage.classList.add("inactive");
+    genericPage.classList.remove("specific-category-page");
+    genericPage.classList.add("inactive");
     trendsPageSection.classList.add("inactive");
     getTrendingMoviesPreview();
     getCategoriesPreview();
@@ -93,12 +104,23 @@ function trendsPage () {
     trending.classList.add("inactive");
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
-    specificCategoryPage.classList.add("inactive");
+    genericPage.classList.add("inactive");
     trendsPageSection.classList.remove("inactive");
 }   
 
 function searchPage () {
     console.log("SEARCH");
+    genericPage.classList.remove("specific-category-page");
+    genericPage.classList.remove("inactive");
+    trending.classList.add("inactive");
+    categories.classList.add("inactive");
+    upcoming.classList.add("inactive");
+    trendsPageSection.classList.add("inactive");
+    genericPage.classList.add("search-page");
+
+    const [_, query] = location.hash.split("=");
+    titlePage.textContent = `You searched for: "${query}"`;
+    getMoviesBySearch(query);
 }
 
 function movieDetailsPage () {
@@ -111,14 +133,16 @@ function categoriesPage () {
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
     trendsPageSection.classList.add("inactive");
-    specificCategoryPage.classList.remove("inactive");
+    genericPage.classList.remove("inactive");
+    genericPage.classList.remove("search-page");
+    genericPage.classList.add("specific-category-page");
 
     location.hash.split("=").forEach((category) => {
         const [id, name] = category.split("-");
         console.log(id);
         //las URLs no pueden tener espacios vacios, por eso cuando se encuentra con uno, lo reemplaza por %20, por eso se usa decodeURI para que lo convierta a un espacio vacio de nuevo
         const formattedTitle = decodeURI(name);
-        specificCategoryTitle.textContent = formattedTitle;
+        titlePage.textContent = formattedTitle;
         
         getMoviesByCategory(id);
     });

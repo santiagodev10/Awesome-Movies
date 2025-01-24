@@ -24,10 +24,10 @@ const categoriesContainer = document.querySelector(".categories__categories-cont
 const upcoming = document.querySelector(".upcoming");
 const upcomingMovies = document.querySelector(".upcoming__movies");
 const upcomingButton = document.querySelector(".upcoming-button");
-//CATEGORIES PAGE
-const specificCategoryPage = document.querySelector(".specific-category-page");
-const specificCategoryTitleContainer = document.querySelector(".specific-category-title-container");
-let specificCategoryTitle = document.querySelector(".specific-category-title");
-const specificCategoryContainer = document.querySelector(".specific-category-container");
+//CATEGORIES PAGE AND SEARCH PAGE
+const genericPage = document.querySelector(".generic-page");
+const titleContainer = document.querySelector(".title-container");
+let titlePage = document.querySelector(".title-page");
+const moviesContainer = document.querySelector(".movies-container");
 //TRENDS PAGE
 const trendsPageSection = document.querySelector(".trends-page");
