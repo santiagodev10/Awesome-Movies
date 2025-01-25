@@ -1,5 +1,8 @@
 window.addEventListener("DOMContentLoaded", navigator);
 window.addEventListener("hashchange", navigator);
+backButton.addEventListener("click", () => {
+    window.history.back();
+});
 trendingButton.addEventListener("click", () => {
     location.hash = "#trends"
 });
@@ -91,6 +94,7 @@ function homePage () {
     trending.classList.remove("inactive");
     categories.classList.remove("inactive");
     upcoming.classList.remove("inactive");
+    backButton.classList.add("inactive");
     genericPage.classList.remove("specific-category-page");
     genericPage.classList.add("inactive");
     trendsPageSection.classList.add("inactive");
@@ -105,6 +109,7 @@ function trendsPage () {
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
     genericPage.classList.add("inactive");
+    backButton.classList.remove("inactive");
     trendsPageSection.classList.remove("inactive");
 }   
 
@@ -112,6 +117,7 @@ function searchPage () {
     console.log("SEARCH");
     genericPage.classList.remove("specific-category-page");
     genericPage.classList.remove("inactive");
+    backButton.classList.remove("inactive");
     trending.classList.add("inactive");
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
@@ -132,10 +138,11 @@ function categoriesPage () {
     trending.classList.add("inactive");
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
+    genericPage.classList.add("specific-category-page");
+    backButton.classList.remove("inactive");
     trendsPageSection.classList.add("inactive");
     genericPage.classList.remove("inactive");
     genericPage.classList.remove("search-page");
-    genericPage.classList.add("specific-category-page");
 
     location.hash.split("=").forEach((category) => {
         const [id, name] = category.split("-");

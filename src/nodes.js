@@ -13,6 +13,7 @@ const navLinks = document.querySelector('.nav-links');
 const footer = document.querySelector("footer");
 //HOME PAGE
 //Main
+const backButton = document.querySelector(".back-button");
 //Trending
 const trending = document.querySelector(".trending");
 const trendingMovies = document.querySelector(".trending__movies");
