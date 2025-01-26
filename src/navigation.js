@@ -97,7 +97,6 @@ function homePage () {
     backButton.classList.add("inactive");
     genericPage.classList.remove("specific-category-page");
     genericPage.classList.add("inactive");
-    trendsPageSection.classList.add("inactive");
     getTrendingMoviesPreview();
     getCategoriesPreview();
     getUpcomingMoviesPreview();
@@ -108,9 +107,10 @@ function trendsPage () {
     trending.classList.add("inactive");
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
-    genericPage.classList.add("inactive");
+    genericPage.classList.remove("inactive");
     backButton.classList.remove("inactive");
-    trendsPageSection.classList.remove("inactive");
+    titlePage.textContent = "Trending Movies";
+    getTrendingMovies();
 }   
 
 function searchPage () {
@@ -121,11 +121,11 @@ function searchPage () {
     trending.classList.add("inactive");
     categories.classList.add("inactive");
     upcoming.classList.add("inactive");
-    trendsPageSection.classList.add("inactive");
     genericPage.classList.add("search-page");
 
     const [_, query] = location.hash.split("=");
-    titlePage.textContent = `You searched for: "${query}"`;
+    const formattedQuery = decodeURI(query);
+    titlePage.textContent = `You searched for: "${formattedQuery}"`;
     getMoviesBySearch(query);
 }
 
@@ -140,7 +140,6 @@ function categoriesPage () {
     upcoming.classList.add("inactive");
     genericPage.classList.add("specific-category-page");
     backButton.classList.remove("inactive");
-    trendsPageSection.classList.add("inactive");
     genericPage.classList.remove("inactive");
     genericPage.classList.remove("search-page");
 

@@ -25,7 +25,7 @@ const categoriesContainer = document.querySelector(".categories__categories-cont
 const upcoming = document.querySelector(".upcoming");
 const upcomingMovies = document.querySelector(".upcoming__movies");
 const upcomingButton = document.querySelector(".upcoming-button");
-//CATEGORIES PAGE AND SEARCH PAGE
+//CATEGORIES PAGE, SEARCH PAGE AND TRENDS PAGE
 const genericPage = document.querySelector(".generic-page");
 const titleContainer = document.querySelector(".title-container");
 let titlePage = document.querySelector(".title-page");

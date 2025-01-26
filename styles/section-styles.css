@@ -20,6 +20,12 @@
     width: 100%;
 }
 
+.title-page {
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+}
+
 .specific-movie-container {
     display: flex;
     flex-direction: column;

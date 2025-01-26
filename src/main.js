@@ -112,5 +112,21 @@ async function getMoviesBySearch(query) {
     });
     const searchData = data.results;
     console.log(searchData);
-    createMoviesForPages(searchData, moviesContainer);
+    if(searchData.length === 0) {
+        moviesContainer.textContent = `I'm sorry, no movies were found`;
+    } else {
+        createMoviesForPages(searchData, moviesContainer);
+    }
+}
+
+async function getTrendingMovies() {
+    moviesContainer.innerHTML = "";
+    const { data } = await apiBaseURL("trending/movie/day");
+    const movies = data.results;
+    console.log(movies);
+    if(movies.length === 0) {
+        moviesContainer.textContent = `I'm sorry, no movies found`;
+    } else {
+        createMoviesForPages(movies, moviesContainer);
+    }
 }
