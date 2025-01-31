@@ -46,3 +46,6 @@ const movieDetailsRating = document.querySelector(".movie-details__rating");
 const movieDetailsGenres = document.querySelector(".movie-details__genres");
 const movieDetailsReleaseDate = document.querySelector(".movie-details__release-date");
 const movieDetailsRuntime = document.querySelector(".movie-details__runtime");
+const movieDetailsRelatedMovies = document.querySelector(".movie-details__related-movies");
+const movieDetailsRelatedMoviesContainer = document.querySelector(".related-movies__movies-container");
+const movieDetailsRelatedMoviesTitle = document.querySelector(".related-movies__title");

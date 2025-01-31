@@ -26,7 +26,7 @@ body {
 header {
     position: sticky;
     top: 0px;
-    padding: 15px 20px;
+    padding: 15px 20px 0px 20px;
     z-index: 1;
 }
 
@@ -128,6 +128,7 @@ main {
     align-items: center;
     justify-content: center;
     position: absolute;
+    top: 85px;
     left: 25px;
     border: none;
     color: white;
@@ -161,6 +162,7 @@ main {
 }
 
 .movie-container {
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -175,26 +177,16 @@ main {
     width: 100vw;
     height: 60vh;
     max-width: 220px;
-    /* display: flex;
-    align-items: center;
-    gap: 15px; */
 }
-
-/* .poster__image {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    scroll-snap-align: center;
-} */
 
 .movies__title {
     font-size: 2rem;
     text-align: center;
 }
 
-.movies__info {
-    font-size: 1.6rem;
-    text-align: center;
+.movies-info {
+    max-height: 30px;
+    overflow: scroll;
 }
 
 /*la descripcion de la pelicula debe tener overflow scroll horizontal, para que el texto no caiga hasta abajo y quite espacio*/

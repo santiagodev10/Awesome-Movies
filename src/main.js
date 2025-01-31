@@ -151,4 +151,14 @@ async function getMovieById(movieId) {
     movieDetailsGenres.textContent = `Genres: ${movies.genres.map((genre) => genre.name).join(", ")}`;
     movieDetailsRating.textContent = `Rating: ${movies.vote_average.toFixed(1)} ⭐`;
     movieDetailsRuntime.textContent = `Runtime: ${movies.runtime} minutes`;
+
+    getRelatedMoviesPreview(movieId);
+}
+
+async function getRelatedMoviesPreview (id) {
+    movieDetailsRelatedMoviesContainer.innerHTML = "";
+    const { data } = await apiBaseURL(`movie/${id}/similar`);
+    const relatedMovies = data.results;
+    console.log(relatedMovies);
+    createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer);
 }
