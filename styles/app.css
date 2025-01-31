@@ -19,13 +19,15 @@ html {
 }
 
 body {
-    background: rgb(2,0,36);
+    position: relative;
+    background: var(--darker-blue);
 }
 
 header {
     position: sticky;
     top: 0px;
     padding: 15px 20px;
+    z-index: 1;
 }
 
 nav {
@@ -150,7 +152,8 @@ main {
     display: flex;
     gap: 20px;
     padding-right: 20px;
-    padding-left: 50px;
+    padding-left: 40px;
+    padding-bottom: 10px;
     overflow-x: scroll;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
@@ -259,7 +262,8 @@ main {
     display: flex;
     gap: 20px;
     padding-right: 20px;
-    padding-left: 50px;
+    padding-left: 40px;
+    padding-bottom: 20px;
     overflow-x: scroll;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
@@ -274,7 +278,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 25px;
+    position: sticky;
     background: var(--middle-blue);
     color: white;
 }

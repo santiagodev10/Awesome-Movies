@@ -1,4 +1,7 @@
+//BODY
+const body = document.querySelector('body');
 //Header nodes
+const header = document.querySelector('header');
 const nav = document.querySelector('nav');
 const headerLogo = document.querySelector('.logo');
 const navLinksContainer = document.querySelector('.nav-links-container');
@@ -32,3 +35,14 @@ let titlePage = document.querySelector(".title-page");
 const moviesContainer = document.querySelector(".movies-container");
 //TRENDS PAGE
 const trendsPageSection = document.querySelector(".trends-page");
+//MOVIE DETAILS PAGE
+const movieDetails = document.querySelector(".movie-details");
+const movieDetailsContainer = document.querySelector(".movie-details__poster-container");
+const movieDetailsPoster = document.querySelector(".movie-details__poster");
+const movieDetailsTitle = document.querySelector(".movie-details__title");
+const movieDetailsImage = document.querySelector(".movie-details__image");
+const movieDetailsDescription = document.querySelector(".movie-details__overview");
+const movieDetailsRating = document.querySelector(".movie-details__rating");
+const movieDetailsGenres = document.querySelector(".movie-details__genres");
+const movieDetailsReleaseDate = document.querySelector(".movie-details__release-date");
+const movieDetailsRuntime = document.querySelector(".movie-details__runtime");

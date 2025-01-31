@@ -18,12 +18,16 @@ function createMoviesForHome(movies, container) {
         moviePosterContainer.classList.add("container__poster");
         moviePoster.classList.add("movie-image");
         movieTitle.classList.add("movies-info");
-        moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
+        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
         movieContainer.append(moviePosterContainer, movieTitle);
-        moviePosterContainer.appendChild(moviePoster);  
+        moviePosterContainer.appendChild(moviePoster);
+
+        movieContainer.addEventListener("click", () => {
+            location.hash = `#movie=${movie.id}`;
+        });
     });
 }
 
@@ -40,12 +44,16 @@ function createMoviesForPages(movies, container) {
         moviePosterContainer.classList.add("poster-container");
         moviePoster.classList.add("movie-image");
         movieTitle.classList.add("movies-info");
-        moviePoster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
+        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
         movieContainer.append(moviePosterContainer, movieTitle);
-        moviePosterContainer.appendChild(moviePoster);  
+        moviePosterContainer.appendChild(moviePoster);
+        
+        movieContainer.addEventListener("click", () => {
+            location.hash = `#movie=${movie.id}`;
+        });
     });
 }
 
@@ -129,4 +137,18 @@ async function getTrendingMovies() {
     } else {
         createMoviesForPages(movies, moviesContainer);
     }
+}
+
+async function getMovieById(movieId) {
+    const { data } = await apiBaseURL(`movie/${movieId}`);
+    const movies = data;
+    console.log(movies);
+
+    movieDetailsPoster.src = `https://image.tmdb.org/t/p/w500${movies.poster_path}`;
+    movieDetailsTitle.textContent = movies.title;
+    movieDetailsDescription.textContent = movies.overview;
+    movieDetailsReleaseDate.textContent = `Release date: ${movies.release_date}`;
+    movieDetailsGenres.textContent = `Genres: ${movies.genres.map((genre) => genre.name).join(", ")}`;
+    movieDetailsRating.textContent = `Rating: ${movies.vote_average.toFixed(1)} ⭐`;
+    movieDetailsRuntime.textContent = `Runtime: ${movies.runtime} minutes`;
 }
