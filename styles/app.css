@@ -177,6 +177,8 @@ main {
     width: 100vw;
     height: 60vh;
     max-width: 220px;
+    aspect-ratio: 220 / 132;
+    object-fit: cover;
 }
 
 .movies__title {

@@ -7,7 +7,17 @@ const apiBaseURL = axios.create({
 })
 
 //Helpers
-function createMoviesForHome(movies, container) {
+const lazyLoader = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        console.log(entry.target);
+        if(entry.isIntersecting) {
+            const url = entry.target.getAttribute("data-img");
+            entry.target.setAttribute("src", url);    
+        }
+    });
+})
+
+function createMoviesForHome(movies, container, lazyLoading = false) {
     container.innerHTML = "";
     movies.forEach((movie) => {
         const movieContainer = document.createElement("div");
@@ -18,7 +28,10 @@ function createMoviesForHome(movies, container) {
         moviePosterContainer.classList.add("container__poster");
         moviePoster.classList.add("movie-image");
         movieTitle.classList.add("movies-info");
-        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        moviePoster.setAttribute(
+            lazyLoading ? "data-img" : "src", 
+            `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
+        // moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
@@ -28,10 +41,14 @@ function createMoviesForHome(movies, container) {
         movieContainer.addEventListener("click", () => {
             location.hash = `#movie=${movie.id}`;
         });
+
+        if(lazyLoading) {
+            lazyLoader.observe(moviePoster);
+        }
     });
 }
 
-function createMoviesForPages(movies, container) {
+function createMoviesForPages(movies, container, lazyLoading = false) {
     //No me funciona el container.innerHTML = "";, porque me esta pasando el mismo problema de antes, que se borra todo el contenido de la pagina
     // container.innerHTML = "";
 
@@ -44,7 +61,10 @@ function createMoviesForPages(movies, container) {
         moviePosterContainer.classList.add("poster-container");
         moviePoster.classList.add("movie-image");
         movieTitle.classList.add("movies-info");
-        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        moviePoster.setAttribute(
+            lazyLoading ? "data-img" : "src", 
+            `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
+        // moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
@@ -54,6 +74,10 @@ function createMoviesForPages(movies, container) {
         movieContainer.addEventListener("click", () => {
             location.hash = `#movie=${movie.id}`;
         });
+
+        if(lazyLoading) {
+            lazyLoader.observe(moviePoster);
+        }
     });
 }
 
@@ -107,7 +131,7 @@ async function getTrendingMoviesPreview() {
     const movies = data.results;
     console.log(movies);
     hideSkeletonLoaders(trendingMovies);
-    createMoviesForHome(movies, trendingMovies);
+    createMoviesForHome(movies, trendingMovies, true);
 }
 
 async function getCategoriesPreview() {
@@ -123,7 +147,7 @@ async function getUpcomingMoviesPreview() {
     const upcomingMoviesData = data.results;
     console.log(upcomingMoviesData);
     hideSkeletonLoaders(upcomingMovies);   
-    createMoviesForHome(upcomingMoviesData, upcomingMovies);
+    createMoviesForHome(upcomingMoviesData, upcomingMovies, true);
 }
 
 async function getMoviesByCategory(id) {
@@ -154,7 +178,7 @@ async function getMoviesBySearch(query) {
         moviesContainer.textContent = `I'm sorry, no movies were found`;
     } else {
         hideSkeletonLoaders(moviesContainer);
-        createMoviesForPages(searchData, moviesContainer);
+        createMoviesForPages(searchData, moviesContainer, true);
     }
 }
 
@@ -194,5 +218,5 @@ async function getRelatedMoviesPreview (id) {
     const relatedMovies = data.results;
     console.log(relatedMovies);
     hideSkeletonLoaders(movieDetailsRelatedMoviesContainer);
-    createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer);
+    createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer, true);
 }
