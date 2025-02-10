@@ -76,12 +76,37 @@ function createCategories(categories, container) {
         imageContainer.appendChild(categoryImage);
     });
 }
+
+function showSkeletonLoaders(container) {
+    container.innerHTML = `
+        <div class="movie-container-skeleton">
+            <div class="movie-container-skeleton--loading"></div>
+            <div class="movie-container-skeleton--loading"></div>
+            <div class="movie-container-skeleton--loading"></div>
+        </div>
+    `;
+}
+
+function showSkeletonLoadersForPages(container) {
+    container.innerHTML = `
+        <div class="pages-skeleton--loading"></div>
+        <div class="pages-skeleton--loading"></div>
+        <div class="pages-skeleton--loading"></div>
+        <div class="pages-skeleton--loading"></div>
+        `;
+}
+
+function hideSkeletonLoaders(container) {
+    container.innerHTML = "";
+}
 //API calls
 
 async function getTrendingMoviesPreview() {
+    showSkeletonLoaders(trendingMovies);
     const { data } = await apiBaseURL("trending/movie/day");
     const movies = data.results;
     console.log(movies);
+    hideSkeletonLoaders(trendingMovies);
     createMoviesForHome(movies, trendingMovies);
 }
 
@@ -93,14 +118,17 @@ async function getCategoriesPreview() {
 }
 
 async function getUpcomingMoviesPreview() {
+    showSkeletonLoaders(upcomingMovies);
     const { data } = await apiBaseURL("movie/upcoming");
     const upcomingMoviesData = data.results;
     console.log(upcomingMoviesData);
+    hideSkeletonLoaders(upcomingMovies);   
     createMoviesForHome(upcomingMoviesData, upcomingMovies);
 }
 
 async function getMoviesByCategory(id) {
     moviesContainer.innerHTML = "";
+    showSkeletonLoadersForPages(moviesContainer);
     const { data } = await apiBaseURL("discover/movie", {
         params: {
             with_genres: id,
@@ -108,11 +136,13 @@ async function getMoviesByCategory(id) {
     });
     const categoryData = data.results;
     console.log(categoryData);
+    hideSkeletonLoaders(moviesContainer);
     createMoviesForPages(categoryData, moviesContainer);
 }
 
 async function getMoviesBySearch(query) {
     moviesContainer.innerHTML = "";
+    showSkeletonLoadersForPages(moviesContainer);
     const { data } = await apiBaseURL("search/movie", {
         params: {
             query,
@@ -123,6 +153,7 @@ async function getMoviesBySearch(query) {
     if(searchData.length === 0) {
         moviesContainer.textContent = `I'm sorry, no movies were found`;
     } else {
+        hideSkeletonLoaders(moviesContainer);
         createMoviesForPages(searchData, moviesContainer);
     }
 }
@@ -145,6 +176,7 @@ async function getMovieById(movieId) {
     console.log(movies);
 
     movieDetailsPoster.src = `https://image.tmdb.org/t/p/w500${movies.poster_path}`;
+    movieDetailsPoster.alt = movies.title;
     movieDetailsTitle.textContent = movies.title;
     movieDetailsDescription.textContent = movies.overview;
     movieDetailsReleaseDate.textContent = `Release date: ${movies.release_date}`;
@@ -157,8 +189,10 @@ async function getMovieById(movieId) {
 
 async function getRelatedMoviesPreview (id) {
     movieDetailsRelatedMoviesContainer.innerHTML = "";
+    showSkeletonLoadersForPages(movieDetailsRelatedMoviesContainer);
     const { data } = await apiBaseURL(`movie/${id}/similar`);
     const relatedMovies = data.results;
     console.log(relatedMovies);
+    hideSkeletonLoaders(movieDetailsRelatedMoviesContainer);
     createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer);
 }

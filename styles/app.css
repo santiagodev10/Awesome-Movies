@@ -26,7 +26,7 @@ body {
 header {
     position: sticky;
     top: 0px;
-    padding: 15px 20px 0px 20px;
+    padding: 15px 20px 15px 20px;
     z-index: 1;
 }
 
@@ -128,7 +128,7 @@ main {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 85px;
+    top: 90px;
     left: 25px;
     border: none;
     color: white;
@@ -305,4 +305,48 @@ footer p {
 
 .inactive {
     display: none;
+}
+
+/*LOADING SKELETONS*/
+
+.movie-container-skeleton {
+    display: flex;
+    gap: 20px;
+}
+
+.movie-container-skeleton--loading {
+    width: 220px;
+    height: 300px;
+    max-width: 220px;
+    border-radius: 10px;
+    background-color: rgb(176, 176, 176);
+    animation: loading-skeleton 1.5s infinite;
+    animation-delay: .1s;
+}
+
+.movie-container-skeleton--loading:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.movie-container-skeleton--loading:nth-child(3) {
+    animation-delay: .4s;
+}
+
+.pages-skeleton--loading {
+    width: 100vw;
+    max-width: 140px;
+    height: 210px;
+    border-radius: 10px;
+    background-color: rgb(176, 176, 176);
+    animation: loading-skeleton 1.5s infinite;
+}
+
+@keyframes loading-skeleton {
+    0%, 100% {
+        opacity: 100%;
+    }
+
+    50% {
+        opacity: 0%;
+    }
 }

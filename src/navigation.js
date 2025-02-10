@@ -99,7 +99,7 @@ function homePage () {
     genericPage.classList.remove("specific-category-page");
     backButton.classList.add("inactive");
     movieDetails.classList.add("inactive");
-    genericPage.classList.add("inactive");
+    genericPage.classList.add("inactive");    
     getTrendingMoviesPreview();
     getCategoriesPreview();
     getUpcomingMoviesPreview();
@@ -145,8 +145,6 @@ function movieDetailsPage () {
     upcoming.classList.add("inactive");
     genericPage.classList.add("inactive");
     header.classList.add("header-shadow");
-    body.classList.add("dark-background");
-    // body.classList.add("poster-background");
     movieDetails.classList.remove("inactive");
     backButton.classList.remove("inactive");
 
