@@ -33,13 +33,19 @@ function createMoviesForHome(movies, container, lazyLoading = false) {
             `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
         // moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
+        moviePoster.addEventListener("error", () => {
+            moviePoster.src = "./../images/error-image.jpg";
+            movieContainer.classList.add("image-error");
+        });
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
         movieContainer.append(moviePosterContainer, movieTitle);
         moviePosterContainer.appendChild(moviePoster);
 
         movieContainer.addEventListener("click", () => {
-            location.hash = `#movie=${movie.id}`;
+            if (!movieContainer.classList.contains("image-error")) {
+                location.hash = `#movie=${movie.id}`;
+            }        
         });
 
         if(lazyLoading) {
@@ -64,15 +70,21 @@ function createMoviesForPages(movies, container, lazyLoading = false) {
         moviePoster.setAttribute(
             lazyLoading ? "data-img" : "src", 
             `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
-        // moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
+        moviePoster.addEventListener("error", () => {
+            moviePoster.src = "./../images/error-image.jpg";
+            movieContainer.classList.add("image-error");
+        });
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
         movieContainer.append(moviePosterContainer, movieTitle);
         moviePosterContainer.appendChild(moviePoster);
         
         movieContainer.addEventListener("click", () => {
-            location.hash = `#movie=${movie.id}`;
+            if (!movieContainer.classList.contains("image-error")) {
+                location.hash = `#movie=${movie.id}`;
+            }        
         });
 
         if(lazyLoading) {
@@ -152,16 +164,16 @@ async function getUpcomingMoviesPreview() {
 
 async function getMoviesByCategory(id) {
     moviesContainer.innerHTML = "";
-    showSkeletonLoadersForPages(moviesContainer);
+    // showSkeletonLoadersForPages(moviesContainer);
     const { data } = await apiBaseURL("discover/movie", {
         params: {
             with_genres: id,
         }
     });
+    // hideSkeletonLoaders(moviesContainer);
     const categoryData = data.results;
     console.log(categoryData);
-    hideSkeletonLoaders(moviesContainer);
-    createMoviesForPages(categoryData, moviesContainer);
+    createMoviesForPages(categoryData, moviesContainer, true);
 }
 
 async function getMoviesBySearch(query) {
@@ -190,7 +202,7 @@ async function getTrendingMovies() {
     if(movies.length === 0) {
         moviesContainer.textContent = `I'm sorry, no movies found`;
     } else {
-        createMoviesForPages(movies, moviesContainer);
+        createMoviesForPages(movies, moviesContainer, true);
     }
 }
 
