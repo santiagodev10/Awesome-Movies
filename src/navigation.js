@@ -1,23 +1,22 @@
+let page = 1;
+let infiniteScroll;
+
 window.addEventListener("DOMContentLoaded", navigator);
 window.addEventListener("hashchange", navigator);
+window.addEventListener("scroll", infiniteScroll, { passive: true });
+
 backButton.addEventListener("click", () => {
     window.history.back();
 });
+
 trendingButton.addEventListener("click", () => {
     location.hash = "#trends"
 });
-categoriesContainer.addEventListener("click", (event) => {
-    const target = event.target;
 
-    if (target.closest(".categories-container__category")) {
-        const categoryTitle = target.closest(".categories-container__title");
-        // specificCategoryTitle.textContent = categoryTitle.textContent;
-        location.hash = `#category=${categoryTitle.id}-${categoryTitle.textContent}`;
-    }
-})
 headerLogo.addEventListener("click", () => {
     location.hash = "#home";
 });
+
 nav.addEventListener("click", (event) => {
     const target = event.target;
 
@@ -74,6 +73,11 @@ nav.addEventListener("click", (event) => {
 function navigator() {
     console.log( {location} );
 
+    if(infiniteScroll) {
+        window.removeEventListener("scroll", infiniteScroll);
+        infiniteScroll = undefined;
+    }
+
     if(location.hash.startsWith("#trends")) {
         trendsPage();
     } else if(location.hash.startsWith("#search=")) {
@@ -85,6 +89,8 @@ function navigator() {
     } else {
         homePage(); 
     }
+
+    window.addEventListener("scroll", infiniteScroll);
 
     window.scrollTo(0, 0);
 }
@@ -117,6 +123,7 @@ function trendsPage () {
     backButton.classList.remove("inactive");
     titlePage.textContent = "Trending Movies";
     getTrendingMovies();
+    infiniteScroll = getPaginatedTrendingMovies;
 }   
 
 function searchPage () {
@@ -154,7 +161,6 @@ function movieDetailsPage () {
 
 function categoriesPage () {    
     console.log("CATEGORIES");
-    body.classList.remove("dark-background");
     header.classList.remove("header-shadow");
     backButton.classList.remove("inactive");
     genericPage.classList.remove("inactive");

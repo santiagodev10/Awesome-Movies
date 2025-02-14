@@ -9,7 +9,7 @@ const apiBaseURL = axios.create({
 //Helpers
 const lazyLoader = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-        console.log(entry.target);
+        // console.log(entry.target);
         if(entry.isIntersecting) {
             const url = entry.target.getAttribute("data-img");
             entry.target.setAttribute("src", url);    
@@ -54,9 +54,18 @@ function createMoviesForHome(movies, container, lazyLoading = false) {
     });
 }
 
-function createMoviesForPages(movies, container, lazyLoading = false) {
-    //No me funciona el container.innerHTML = "";, porque me esta pasando el mismo problema de antes, que se borra todo el contenido de la pagina
-    // container.innerHTML = "";
+function createMoviesForPages(
+    movies,
+    container,
+    { 
+        lazyLoading = false,
+        clean = true 
+    } = {},
+) {
+
+    if(clean) {
+        container.innerHTML = "";
+    }
 
     movies.forEach((movie) => {
         const movieContainer = document.createElement("div");
@@ -70,7 +79,7 @@ function createMoviesForPages(movies, container, lazyLoading = false) {
         moviePoster.setAttribute(
             lazyLoading ? "data-img" : "src", 
             `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
-        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        // moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         moviePoster.alt = movie.title;
         moviePoster.addEventListener("error", () => {
             moviePoster.src = "./../images/error-image.jpg";
@@ -105,6 +114,9 @@ function createCategories(categories, container) {
         imageContainer.classList.add("categories-container__image-container");
         categoryTitle.textContent = category.name;
         categoryTitle.id = category.id;
+        categoryTitle.addEventListener("click", () => {
+            location.hash = `#category=${category.id}-${category.name}`;
+        });
         categoryImage.src = "./../images/movie-icon.png";
         categoryImage.alt = category.name;
         container.appendChild(categoryContainer);
@@ -163,8 +175,8 @@ async function getUpcomingMoviesPreview() {
 }
 
 async function getMoviesByCategory(id) {
-    moviesContainer.innerHTML = "";
-    // showSkeletonLoadersForPages(moviesContainer);
+    // moviesContainer.innerHTML = "";
+    showSkeletonLoadersForPages(moviesContainer);
     const { data } = await apiBaseURL("discover/movie", {
         params: {
             with_genres: id,
@@ -173,11 +185,11 @@ async function getMoviesByCategory(id) {
     // hideSkeletonLoaders(moviesContainer);
     const categoryData = data.results;
     console.log(categoryData);
-    createMoviesForPages(categoryData, moviesContainer, true);
+    createMoviesForPages(categoryData, moviesContainer, { lazyLoading: true });
 }
 
 async function getMoviesBySearch(query) {
-    moviesContainer.innerHTML = "";
+    // moviesContainer.innerHTML = "";
     showSkeletonLoadersForPages(moviesContainer);
     const { data } = await apiBaseURL("search/movie", {
         params: {
@@ -190,20 +202,59 @@ async function getMoviesBySearch(query) {
         moviesContainer.textContent = `I'm sorry, no movies were found`;
     } else {
         hideSkeletonLoaders(moviesContainer);
-        createMoviesForPages(searchData, moviesContainer, true);
+        createMoviesForPages(searchData, moviesContainer, { lazyLoading: true });
     }
 }
 
 async function getTrendingMovies() {
-    moviesContainer.innerHTML = "";
+    // moviesContainer.innerHTML = "";
     const { data } = await apiBaseURL("trending/movie/day");
     const movies = data.results;
     console.log(movies);
     if(movies.length === 0) {
         moviesContainer.textContent = `I'm sorry, no movies found`;
     } else {
-        createMoviesForPages(movies, moviesContainer, true);
+        createMoviesForPages(movies, moviesContainer, { lazyLoading: true });
     }
+
+    // const buttonLoadMore = document.createElement("button");
+    // buttonLoadMore.textContent = "Load more";
+    // buttonLoadMore.classList.add("load-more-button");
+    // moviesContainer.appendChild(buttonLoadMore);
+    // buttonLoadMore.addEventListener("click", getPaginatedTrendingMovies);
+}
+
+window.addEventListener("scroll", getPaginatedTrendingMovies);
+
+async function getPaginatedTrendingMovies() {
+    const { 
+        scrollTop,
+        scrollHeight,
+        clientHeight 
+    } = document.documentElement;
+
+    const scrollReachedBottom = scrollTop + clientHeight >= scrollHeight - 50;
+
+    if(scrollReachedBottom) {
+        page++;
+        const { data } = await apiBaseURL("trending/movie/day", {
+            params: {
+                page,
+            }
+        });
+        const movies = data.results;
+        console.log(movies);
+        createMoviesForPages(movies, moviesContainer, { lazyLoading: true, clean: false });
+    }
+    
+    // const previousButton = document.querySelector(".load-more-button");
+    // previousButton.remove();
+
+    // const buttonLoadMore = document.createElement("button");
+    // buttonLoadMore.textContent = "Load more";
+    // buttonLoadMore.classList.add("load-more-button");
+    // moviesContainer.appendChild(buttonLoadMore);
+    // buttonLoadMore.addEventListener("click", getPaginatedTrendingMovies);
 }
 
 async function getMovieById(movieId) {
@@ -224,11 +275,11 @@ async function getMovieById(movieId) {
 }
 
 async function getRelatedMoviesPreview (id) {
-    movieDetailsRelatedMoviesContainer.innerHTML = "";
+    // movieDetailsRelatedMoviesContainer.innerHTML = "";
     showSkeletonLoadersForPages(movieDetailsRelatedMoviesContainer);
     const { data } = await apiBaseURL(`movie/${id}/similar`);
     const relatedMovies = data.results;
     console.log(relatedMovies);
     hideSkeletonLoaders(movieDetailsRelatedMoviesContainer);
-    createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer, true);
+    createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer, { lazyLoading: true });
 }

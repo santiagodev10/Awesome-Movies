@@ -37,7 +37,7 @@
 .poster-container {
     width: 100vw;
     max-width: 140px;
-    min-height: 175px;
+    /* min-height: 175px; */
     /* height: 100%; */
 }
 
