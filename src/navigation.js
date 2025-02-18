@@ -1,3 +1,4 @@
+let maxPage;
 let page = 1;
 let infiniteScroll;
 
@@ -90,9 +91,11 @@ function navigator() {
         homePage(); 
     }
 
-    window.addEventListener("scroll", infiniteScroll);
-
+    
     window.scrollTo(0, 0);
+    if(infiniteScroll) {
+        window.addEventListener("scroll", infiniteScroll);
+    }
 }
 
 function homePage () {
@@ -143,6 +146,8 @@ function searchPage () {
     const formattedQuery = decodeURI(query);
     titlePage.textContent = `You searched for: "${formattedQuery}"`;
     getMoviesBySearch(query);
+
+    infiniteScroll = getPaginatedMoviesBySearch(query);
 }
 
 function movieDetailsPage () {
@@ -179,5 +184,7 @@ function categoriesPage () {
         titlePage.textContent = formattedTitle;
         
         getMoviesByCategory(id);
+
+        infiniteScroll = getPaginatedMoviesByCategory(id);
     });
 }

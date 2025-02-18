@@ -182,10 +182,37 @@ async function getMoviesByCategory(id) {
             with_genres: id,
         }
     });
-    // hideSkeletonLoaders(moviesContainer);
     const categoryData = data.results;
+    maxPage = data.total_pages;
     console.log(categoryData);
+    console.log(maxPage);
     createMoviesForPages(categoryData, moviesContainer, { lazyLoading: true });
+}
+
+function getPaginatedMoviesByCategory(id) {
+    return async function () {
+        const { 
+            scrollTop,
+            scrollHeight,
+            clientHeight 
+        } = document.documentElement;
+    
+        const pageIsNotMax = page < maxPage;
+        const scrollReachedBottom = scrollTop + clientHeight >= scrollHeight - 50;
+    
+        if(scrollReachedBottom && pageIsNotMax) {
+            page++;
+            const { data } = await apiBaseURL("discover/movie", {
+                params: {
+                    with_genres: id,
+                    page,
+                }
+            });
+            const categoryData = data.results;
+            console.log(categoryData);
+            createMoviesForPages(categoryData, moviesContainer, { lazyLoading: true, clean: false });
+        }
+    }
 }
 
 async function getMoviesBySearch(query) {
@@ -197,7 +224,9 @@ async function getMoviesBySearch(query) {
         }
     });
     const searchData = data.results;
+    maxPage = data.total_pages;
     console.log(searchData);
+    console.log(maxPage);
     if(searchData.length === 0) {
         moviesContainer.textContent = `I'm sorry, no movies were found`;
     } else {
@@ -206,25 +235,46 @@ async function getMoviesBySearch(query) {
     }
 }
 
+function getPaginatedMoviesBySearch(query) {
+    return async function () {
+        const { 
+            scrollTop,
+            scrollHeight,
+            clientHeight 
+        } = document.documentElement;
+    
+        const pageIsNotMax = page < maxPage;
+        const scrollReachedBottom = scrollTop + clientHeight >= scrollHeight - 50;
+    
+        if(scrollReachedBottom && pageIsNotMax) {
+            page++;
+            const { data } = await apiBaseURL("search/movie", {
+                params: {
+                    query,
+                    page,
+                }
+            });
+            const searchData = data.results;
+            console.log(searchData);
+            createMoviesForPages(searchData, moviesContainer, { lazyLoading: true, clean: false });
+        }
+    }
+}
+
 async function getTrendingMovies() {
     // moviesContainer.innerHTML = "";
     const { data } = await apiBaseURL("trending/movie/day");
     const movies = data.results;
+    maxPage = data.total_pages;
     console.log(movies);
+    console.log(maxPage);
+    
     if(movies.length === 0) {
         moviesContainer.textContent = `I'm sorry, no movies found`;
     } else {
         createMoviesForPages(movies, moviesContainer, { lazyLoading: true });
     }
-
-    // const buttonLoadMore = document.createElement("button");
-    // buttonLoadMore.textContent = "Load more";
-    // buttonLoadMore.classList.add("load-more-button");
-    // moviesContainer.appendChild(buttonLoadMore);
-    // buttonLoadMore.addEventListener("click", getPaginatedTrendingMovies);
 }
-
-window.addEventListener("scroll", getPaginatedTrendingMovies);
 
 async function getPaginatedTrendingMovies() {
     const { 
@@ -232,29 +282,21 @@ async function getPaginatedTrendingMovies() {
         scrollHeight,
         clientHeight 
     } = document.documentElement;
-
+    const pageIsNotMax = page < maxPage;
     const scrollReachedBottom = scrollTop + clientHeight >= scrollHeight - 50;
 
-    if(scrollReachedBottom) {
+    if(scrollReachedBottom && pageIsNotMax) {
         page++;
         const { data } = await apiBaseURL("trending/movie/day", {
             params: {
                 page,
             }
         });
+        console.log(data);
         const movies = data.results;
         console.log(movies);
         createMoviesForPages(movies, moviesContainer, { lazyLoading: true, clean: false });
     }
-    
-    // const previousButton = document.querySelector(".load-more-button");
-    // previousButton.remove();
-
-    // const buttonLoadMore = document.createElement("button");
-    // buttonLoadMore.textContent = "Load more";
-    // buttonLoadMore.classList.add("load-more-button");
-    // moviesContainer.appendChild(buttonLoadMore);
-    // buttonLoadMore.addEventListener("click", getPaginatedTrendingMovies);
 }
 
 async function getMovieById(movieId) {
