@@ -24,6 +24,8 @@ function createMoviesForHome(movies, container, lazyLoading = false) {
         const moviePosterContainer = document.createElement("figure");
         const moviePoster = document.createElement("img");
         const movieTitle = document.createElement("h3");
+        const likeButton = document.createElement("button");
+        likeButton.classList.add("like-button");
         movieContainer.classList.add("movie-container");
         moviePosterContainer.classList.add("container__poster");
         moviePoster.classList.add("movie-image");
@@ -39,18 +41,25 @@ function createMoviesForHome(movies, container, lazyLoading = false) {
         });
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
-        movieContainer.append(moviePosterContainer, movieTitle);
+        movieContainer.append(likeButton, moviePosterContainer, movieTitle);
         moviePosterContainer.appendChild(moviePoster);
 
-        movieContainer.addEventListener("click", () => {
+        moviePoster.addEventListener("click", () => {
             if (!movieContainer.classList.contains("image-error")) {
                 location.hash = `#movie=${movie.id}`;
             }        
         });
 
+        likeButton.addEventListener("click", () => {
+            console.log("LIKE");
+            likeButton.classList.toggle("like-button--liked");
+            //AQUI SE GUARDA EN LOCAL STORAGE
+        })
+
         if(lazyLoading) {
             lazyLoader.observe(moviePoster);
         }
+
     });
 }
 
@@ -72,6 +81,8 @@ function createMoviesForPages(
         const moviePosterContainer = document.createElement("figure");
         const moviePoster = document.createElement("img");
         const movieTitle = document.createElement("h3");
+        const likeButton = document.createElement("button");
+        likeButton.classList.add("like-button");
         movieContainer.classList.add("movie-container");
         moviePosterContainer.classList.add("poster-container");
         moviePoster.classList.add("movie-image");
@@ -87,14 +98,20 @@ function createMoviesForPages(
         });
         movieTitle.textContent = movie.title;
         container.appendChild(movieContainer);
-        movieContainer.append(moviePosterContainer, movieTitle);
+        movieContainer.append(likeButton, moviePosterContainer, movieTitle);
         moviePosterContainer.appendChild(moviePoster);
         
-        movieContainer.addEventListener("click", () => {
+        moviePoster.addEventListener("click", () => {
             if (!movieContainer.classList.contains("image-error")) {
                 location.hash = `#movie=${movie.id}`;
             }        
         });
+
+        likeButton.addEventListener("click", () => {
+            console.log("LIKE");
+            likeButton.classList.toggle("like-button--liked");
+            //AQUI SE GUARDA EN LOCAL STORAGE
+        })
 
         if(lazyLoading) {
             lazyLoader.observe(moviePoster);

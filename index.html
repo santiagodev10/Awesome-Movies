@@ -54,12 +54,12 @@
         <button type="button" class="back-button">Back
             <img src="./images/previous.png" alt="arrow-icon" class="back-button__icon">
         </button>
-        <section class="trending" id="trending">
+        <section class="trending section-page" id="trending">
             <div class="section-title-container">
                 <h2 class="section-title">Trending</h2>
                 <button class="trending-button see-more-button">See more</button>
             </div>
-            <article class="trending__movies">
+            <article class="trending__movies scroll-container">
                 <div class="movie-container-skeleton">
                     <div class="movie-container-skeleton--loading"></div>
                     <div class="movie-container-skeleton--loading"></div>
@@ -82,16 +82,39 @@
                 <div class="categories-skeleton--loading"></div>
             </article>
         </section>
-        <section class="upcoming" id="upcoming">
+        <section class="upcoming section-page" id="upcoming">
             <div class="section-title-container">
                 <h2 class="section-title">Upcoming</h2>
                 <button class="upcoming-button see-more-button">See more</button>
             </div>
-            <article class="upcoming__movies">
+            <article class="upcoming__movies scroll-container">
                 <div class="movie-container-skeleton">
                     <div class="movie-container-skeleton--loading"></div>
                     <div class="movie-container-skeleton--loading"></div>
                     <div class="movie-container-skeleton--loading"></div>
+                </div>
+            </article>
+        </section>
+
+        <section id="liked" class="section-page">
+            <div class="section-title-container">
+                <h2 class="liked-title section-title">Favorite movies</h2>
+            </div>
+            <article class="scroll-container">
+                <div class="movie-container">
+                    <figure class="container__poster">
+                        <img src="./images/action-movie-image.webp" alt="" class="movie-image">
+                    </figure>
+                </div>
+                <div class="movie-container">
+                    <figure class="container__poster">
+                        <img src="./images/action-movie-image.webp" alt="" class="movie-image">
+                    </figure>
+                </div>
+                <div class="movie-container">
+                    <figure class="container__poster">
+                        <img src="./images/action-movie-image.webp" alt="" class="movie-image">
+                    </figure>
                 </div>
             </article>
         </section>
