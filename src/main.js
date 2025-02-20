@@ -46,7 +46,7 @@ const lazyLoader = new IntersectionObserver((entries) => {
 
 function createMoviesForHome(movies, container, lazyLoading = false) {
     container.innerHTML = "";
-    movies.forEach((movie) => {
+    movies.forEach((movie) => {        
         const movieContainer = document.createElement("div");
         const moviePosterContainer = document.createElement("figure");
         const moviePoster = document.createElement("img");
@@ -76,12 +76,16 @@ function createMoviesForHome(movies, container, lazyLoading = false) {
                 location.hash = `#movie=${movie.id}`;
             }        
         });
+    
+        likedMoviesList()[movie.id] ? likeButton.classList.add("like-button--liked") : null;
 
-        likeButton.addEventListener("click", () => {
+        likeButton.addEventListener("click", (e) => {
+            e.stopPropagation();
             console.log("LIKE");
             likeButton.classList.toggle("like-button--liked");
             //AQUI SE GUARDA EN LOCAL STORAGE
             likeMovie(movie);
+            getLikedMovies();
         })
 
         if(lazyLoading) {
@@ -135,12 +139,15 @@ function createMoviesForPages(
             }        
         });
 
+        likedMoviesList()[movie.id] ? likeButton.classList.add("like-button--liked") : null;
+
         likeButton.addEventListener("click", (e) => {
             e.stopPropagation();
             console.log("LIKE");
             likeButton.classList.toggle("like-button--liked");
             //AQUI SE GUARDA EN LOCAL STORAGE
-            likeMovie(movieId);
+            likeMovie(movie);
+            getLikedMovies();
         })
 
         if(lazyLoading) {
@@ -371,4 +378,11 @@ async function getRelatedMoviesPreview (id) {
     console.log(relatedMovies);
     hideSkeletonLoaders(movieDetailsRelatedMoviesContainer);
     createMoviesForPages(relatedMovies, movieDetailsRelatedMoviesContainer, { lazyLoading: true });
+}
+
+function getLikedMovies () {
+    const likedMovies = likedMoviesList();
+    const likedMoviesArray = Object.values(likedMovies);
+    console.log(likedMoviesArray);
+    createMoviesForHome(likedMoviesArray, likedMoviesContainer, { lazyLoading: true, clean: true });
 }
