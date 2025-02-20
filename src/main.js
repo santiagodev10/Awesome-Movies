@@ -1,3 +1,5 @@
+//Data
+
 const apiBaseURL = axios.create({
     baseURL: "https://api.themoviedb.org/3/",
     headers: {
@@ -5,6 +7,31 @@ const apiBaseURL = axios.create({
         "Authorization": `Bearer ${API_KEY}`,
     },
 })
+
+function likedMoviesList() {
+    const item = localStorage.getItem("liked_movies");
+    let movies;
+    if(item) {
+        movies = JSON.parse(item);
+    } else {
+        movies = {};
+    }
+    return movies;
+}
+
+function likeMovie(movie) {
+    console.log(likedMoviesList());
+    const likedMovies = likedMoviesList();
+    if(likedMovies[movie.id]) {	
+        console.log("ya esta en LS, hay que eliminarla");
+        delete likedMovies[movie.id];
+    } else {
+        console.log("no esta en LS, hay que agregarla");
+        likedMovies[movie.id] = movie;
+    }
+
+    localStorage.setItem("liked_movies", JSON.stringify(likedMovies));
+}
 
 //Helpers
 const lazyLoader = new IntersectionObserver((entries) => {
@@ -54,6 +81,7 @@ function createMoviesForHome(movies, container, lazyLoading = false) {
             console.log("LIKE");
             likeButton.classList.toggle("like-button--liked");
             //AQUI SE GUARDA EN LOCAL STORAGE
+            likeMovie(movie);
         })
 
         if(lazyLoading) {
@@ -101,16 +129,18 @@ function createMoviesForPages(
         movieContainer.append(likeButton, moviePosterContainer, movieTitle);
         moviePosterContainer.appendChild(moviePoster);
         
-        moviePoster.addEventListener("click", () => {
+        movieContainer.addEventListener("click", () => {
             if (!movieContainer.classList.contains("image-error")) {
                 location.hash = `#movie=${movie.id}`;
             }        
         });
 
-        likeButton.addEventListener("click", () => {
+        likeButton.addEventListener("click", (e) => {
+            e.stopPropagation();
             console.log("LIKE");
             likeButton.classList.toggle("like-button--liked");
             //AQUI SE GUARDA EN LOCAL STORAGE
+            likeMovie(movieId);
         })
 
         if(lazyLoading) {
