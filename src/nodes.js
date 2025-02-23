@@ -30,12 +30,13 @@ const upcomingMovies = document.querySelector(".upcoming__movies");
 const upcomingButton = document.querySelector(".upcoming-button");
 //Liked
 const likedMoviesContainer = document.querySelector(".liked-container");
-const likeSection = document.querySelector("#liked");
+const likeSection = document.querySelector("#favorites");
 //CATEGORIES PAGE, SEARCH PAGE AND TRENDS PAGE
 const genericPage = document.querySelector(".generic-page");
 const titleContainer = document.querySelector(".title-container");
 let titlePage = document.querySelector(".title-page");
 const moviesContainer = document.querySelector(".movies-container");
+const categoriesContainerLink = document.querySelector(".categories-container");
 //TRENDS PAGE
 const trendsPageSection = document.querySelector(".trends-page");
 //MOVIE DETAILS PAGE

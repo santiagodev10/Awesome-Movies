@@ -32,16 +32,33 @@
                         <a href="" class="li-container__link">Home</a>
                     </li>
                     <li class="nav-links__li-container">
-                        <a href="#trending" class="li-container__link">Trending</a>
+                        <a href="#trends" class="li-container__link">Trending</a>
                     </li>
                     <li class="nav-links__li-container">
-                        <a href="#categories" class="li-container__link">Categories</a>
+                        <h2 class="li-container__link categories-container">Categories ⬇️</h2>
+                        <section class="categories inactive" id="categories">
+                            <article class="categories__categories-container">
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                                <div class="categories-skeleton--loading"></div>
+                            </article>
+                        </section>
                     </li>
                     <li class="nav-links__li-container">
                         <a href="#upcoming" class="li-container__link">Upcoming</a>
                     </li>
                     <li class="nav-links__li-container">
                         <a href="#search" class="li-container__link">Search</a>
+                    </li>
+                    <li class="nav-links__li-container">
+                        <a href="#favorites" class="li-container__link">Favorite Movies</a>
                     </li>
                 </ul>
             </div>
@@ -67,27 +84,13 @@
                 </div>
             </article>
         </section>
-        <section class="categories" id="categories">
-            <h2>Categories</h2>
-            <article class="categories__categories-container">
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-                <div class="categories-skeleton--loading"></div>
-            </article>
-        </section>
+        
         <section class="upcoming section-page" id="upcoming">
             <div class="section-title-container">
                 <h2 class="section-title">Upcoming</h2>
                 <button class="upcoming-button see-more-button">See more</button>
             </div>
-            <article class="upcoming__movies scroll-container">
+            <article id="#upcoming" class="upcoming__movies scroll-container">
                 <div class="movie-container-skeleton">
                     <div class="movie-container-skeleton--loading"></div>
                     <div class="movie-container-skeleton--loading"></div>
@@ -96,7 +99,7 @@
             </article>
         </section>
 
-        <section id="liked" class="section-page">
+        <section id="favorites" class="section-page">
             <div class="section-title-container">
                 <h2 class="liked-title section-title">Favorite movies</h2>
             </div>

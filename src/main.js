@@ -174,8 +174,8 @@ function createCategories(categories, container) {
         categoryImage.src = "./../images/movie-icon.png";
         categoryImage.alt = category.name;
         container.appendChild(categoryContainer);
-        categoryContainer.append(imageContainer, categoryTitle);
-        imageContainer.appendChild(categoryImage);
+        categoryContainer.append(categoryTitle);
+        // imageContainer.appendChild(categoryImage);
     });
 }
 

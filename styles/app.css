@@ -72,15 +72,19 @@ nav .nav-links-container {
 
 nav .nav-links {
     width: 78%;
+    min-height: 160px;
+    max-height: 320px;
     position: absolute;
     margin-top: 20px;
     padding: 10px;
     border-top: white 2px solid;
     border-radius: 10px;
     background-color: rgb(98, 0, 255);
+    overflow-y: scroll;
 }
 
 .li-container__link {
+    width: fit-content;
     font-size: 1.6rem;
     font-weight: 700;
     color: white;
@@ -214,22 +218,26 @@ main {
 .categories__categories-container {   
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
-    padding: 20px;
+    grid-template-columns: repeat(2, minmax(70px, 1fr));
+    padding: 10px;
     color: white;
     gap: 20px;
 }
 
 .categories-container__category {
-    width: fit-content;
+    width: 80px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    border: 1px solid black;
+    padding: 2px;
 }
 
 .categories-container__title {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     color: white;
+    text-align: center;
 }
 
 /* .categories-container__image-container {
