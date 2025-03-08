@@ -2,8 +2,8 @@ let maxPage;
 let page = 1;
 let infiniteScroll;
 
-window.addEventListener("DOMContentLoaded", navigator);
-window.addEventListener("hashchange", navigator);
+window.addEventListener("DOMContentLoaded", navigationHandler);
+window.addEventListener("hashchange", navigationHandler);
 window.addEventListener("scroll", infiniteScroll, { passive: true });
 
 backButton.addEventListener("click", () => {
@@ -25,43 +25,31 @@ nav.addEventListener("click", (event) => {
         console.log("LOGO");
     } else if(target.closest('.search')) {
         console.log("SEARCH");
-        const searchInput = document.createElement("input");
-        const closeButtonContainer = document.createElement("div");
-        const closeButtonBar1 = document.createElement("div");
-        const closeButtonBar2 = document.createElement("div");
-        const closeButtonBar3 = document.createElement("div");
-        headerLogo.classList.toggle("inactive");
-        navLinksContainer.classList.toggle("inactive");
-        searchInput.type = "search";
-        searchInput.classList.add("search__input");
-        searchInput.id = "search-input";
-        searchInput.placeholder = "Search for a movie";
-        closeButtonContainer.classList.add("search__close");
-        closeButtonContainer.classList.toggle("change");
-        closeButtonBar1.classList.toggle("bar-1");
-        closeButtonBar1.classList.toggle("menu-icon");
-        closeButtonBar2.classList.toggle("bar-2");
-        closeButtonBar2.classList.toggle("menu-icon");
-        closeButtonBar3.classList.toggle("bar-3");
-        closeButtonBar3.classList.toggle("menu-icon");
-        searchButton.classList.toggle("inactive");
-        closeButtonContainer.append(closeButtonBar1, closeButtonBar2, closeButtonBar3);
-        nav.append(closeButtonContainer, searchInput);
+        
+        headerLogo.classList.toggle("hide");
+        navLinksContainer.classList.toggle("hide");
+        searchButton.classList.toggle("hide");
+        searchInput.classList.toggle("hide");
+        closeButtonContainer.classList.toggle("hide");
+        const closeSearch = () => {
+            searchInput.classList.toggle("hide");
+            closeButtonContainer.classList.toggle("hide");
+            headerLogo.classList.toggle("hide");
+            navLinksContainer.classList.toggle("hide");
+            searchButton.classList.toggle("hide");
 
-        closeButtonContainer.addEventListener("click", () => {
-            searchInput.remove();
-            closeButtonContainer.remove();
-            headerLogo.classList.toggle("inactive");
-            navLinksContainer.classList.toggle("inactive");
-            searchButton.classList.toggle("inactive");
-        });
+            // Eliminar el listener después de que se haya ejecutado una vez
+            closeButtonContainer.removeEventListener("click", closeSearch);
+        };
 
+        closeButtonContainer.addEventListener("click", closeSearch);
+    
         searchInput.addEventListener("keydown", (event) => {
             if(event.key === "Enter") {
                 console.log("ENTER");
                 event.preventDefault();
                 location.hash = `#search=${searchInput.value}`;
-            }
+            }       
         });
     }
 })
@@ -71,13 +59,47 @@ navLinksContainer.addEventListener("click", () => {
     navLinks.classList.toggle("inactive");
 });
 
-categoriesContainerLink.addEventListener("click", (e) => {
+categoriesContainer.addEventListener("click", (e) => {
     e.stopPropagation();
     console.log("CATEGORIES");
-    categories.classList.toggle("inactive");
+    categoriesSection.classList.toggle("inactive");
 });
 
-function navigator() {
+languageContainer.addEventListener("click", (e) => {
+    e.stopPropagation();
+    console.log("LANGUAGE");
+    languageSection.classList.toggle("inactive");
+    //AQUI VA LA LOGICA PARA CAMBIAR EL LENGUAJE
+    languageArticle.innerHTML = "";
+    const languageList = JSON.parse(localStorage.getItem("languages"));
+    console.log(languageList);
+    languageList.forEach((language) => {
+        const languageContainer = document.createElement("div");
+        const languageItem = document.createElement("h3");
+        languageContainer.classList.add("dropdown-item");
+        languageContainer.classList.add("language-item");
+        languageItem.classList.add("language-item__text");
+        languageArticle.append(languageContainer);
+        languageItem.textContent = language.english_name;
+        languageItem.setAttribute("iso-code", language.iso_639_1);
+        languageContainer.append(languageItem);
+    });
+
+});
+
+languageArticle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const target = e.target;
+
+    if(target.closest(".language-item")) {
+        console.log("LANGUAGE ITEM");
+        // console.log(target.textContent);
+        
+        changeLanguage(target.getAttribute("iso-code"));
+    }
+});
+
+function navigationHandler() {
     console.log( {location} );
 
     if(infiniteScroll) {
@@ -120,6 +142,7 @@ function homePage () {
     getCategoriesPreview();
     getUpcomingMoviesPreview();
     getLikedMovies();
+    getLanguages();
 }
 
 function trendsPage () {
@@ -135,6 +158,8 @@ function trendsPage () {
     backButton.classList.remove("inactive");
     titlePage.textContent = "Trending Movies";
     getTrendingMovies();
+    changeLanguage(preferredLanguage);
+    
     infiniteScroll = getPaginatedTrendingMovies;
 }   
 
@@ -151,12 +176,13 @@ function searchPage () {
     genericPage.classList.add("search-page");
     movieDetails.classList.add("inactive");
     likeSection.classList.add("inactive");
-
+    
     const [_, query] = location.hash.split("=");
     const formattedQuery = decodeURI(query);
     titlePage.textContent = `You searched for: "${formattedQuery}"`;
     getMoviesBySearch(query);
-
+    changeLanguage(preferredLanguage);
+    
     infiniteScroll = getPaginatedMoviesBySearch(query);
 }
 
@@ -173,6 +199,7 @@ function movieDetailsPage () {
 
     const [_, movieId] = location.hash.split("=");
     getMovieById(movieId);
+    // changeLanguage(preferredLanguage);
 }
 
 function categoriesPage () {    
@@ -196,6 +223,7 @@ function categoriesPage () {
         titlePage.textContent = formattedTitle;
         
         getMoviesByCategory(id);
+        changeLanguage(preferredLanguage);
 
         infiniteScroll = getPaginatedMoviesByCategory(id);
     });

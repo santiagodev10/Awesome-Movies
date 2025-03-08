@@ -1,11 +1,16 @@
 //Data
-
+let preferredLanguage = "en";
+navigator.language = preferredLanguage;	
 const apiBaseURL = axios.create({
     baseURL: "https://api.themoviedb.org/3/",
     headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${API_KEY}`,
     },
+    params: 
+    { 
+        "language": navigator.language = preferredLanguage,
+    }
 })
 
 function likedMoviesList() {
@@ -157,25 +162,21 @@ function createMoviesForPages(
 }
 
 function createCategories(categories, container) {
-    categoriesContainer.innerHTML = "";
+    categoriesArticle.innerHTML = "";
     categories.forEach((category) => {
         const categoryContainer = document.createElement("div");
         const categoryTitle = document.createElement("h3");
-        const imageContainer = document.createElement("figure");
-        const categoryImage = document.createElement("img");
         categoryContainer.classList.add("categories-container__category");
+        categoryContainer.classList.add("dropdown-item");
         categoryTitle.classList.add("categories-container__title");
-        imageContainer.classList.add("categories-container__image-container");
+        categoryTitle.classList.add("dropdown-item-title");
         categoryTitle.textContent = category.name;
         categoryTitle.id = category.id;
         categoryTitle.addEventListener("click", () => {
             location.hash = `#category=${category.id}-${category.name}`;
         });
-        categoryImage.src = "./../images/movie-icon.png";
-        categoryImage.alt = category.name;
         container.appendChild(categoryContainer);
         categoryContainer.append(categoryTitle);
-        // imageContainer.appendChild(categoryImage);
     });
 }
 
@@ -216,7 +217,7 @@ async function getCategoriesPreview() {
     const { data } = await apiBaseURL("genre/movie/list");
     const categoriesData = data.genres;
     console.log(categoriesData);
-    createCategories(categoriesData, categoriesContainer);
+    createCategories(categoriesData, categoriesArticle);
 }
 
 async function getUpcomingMoviesPreview() {
@@ -357,17 +358,22 @@ async function getMovieById(movieId) {
     const { data } = await apiBaseURL(`movie/${movieId}`);
     const movies = data;
     console.log(movies);
+    const translationList = translations();
 
-    movieDetailsPoster.src = `https://image.tmdb.org/t/p/w500${movies.poster_path}`;
-    movieDetailsPoster.alt = movies.title;
-    movieDetailsTitle.textContent = movies.title;
-    movieDetailsDescription.textContent = movies.overview;
-    movieDetailsReleaseDate.textContent = `Release date: ${movies.release_date}`;
-    movieDetailsGenres.textContent = `Genres: ${movies.genres.map((genre) => genre.name).join(", ")}`;
-    movieDetailsRating.textContent = `Rating: ${movies.vote_average.toFixed(1)} ⭐`;
-    movieDetailsRuntime.textContent = `Runtime: ${movies.runtime} minutes`;
+    translationList.forEach((item) => {
+        if(item.lang === preferredLanguage) {
+            movieDetailsPoster.src = `https://image.tmdb.org/t/p/w500${movies.poster_path}`;
+            movieDetailsTitle.textContent = movies.title;
+            movieDetailsDescription.textContent = movies.overview;
+            movieDetailsReleaseDate.textContent = `${item.movieDetailsCaptions.releaseDate}${movies.release_date}`;
+            movieDetailsGenres.textContent = `${item.movieDetailsCaptions.genres}${movies.genres.map((genre) => genre.name).join(", ")}`;
+            movieDetailsRating.textContent = `${item.movieDetailsCaptions.rating}${movies.vote_average.toFixed(1)} ⭐`;
+            movieDetailsRuntime.textContent = `${item.movieDetailsCaptions.runtime}${movies.runtime}${item.movieDetailsCaptions.minutes}`;
+            movieDetailsRelatedMoviesTitle.textContent = item.movieDetailsCaptions.relatedMovies;
+        }
+        getRelatedMoviesPreview(movieId);
+    });
 
-    getRelatedMoviesPreview(movieId);
 }
 
 async function getRelatedMoviesPreview (id) {
@@ -385,4 +391,189 @@ function getLikedMovies () {
     const likedMoviesArray = Object.values(likedMovies);
     console.log(likedMoviesArray);
     createMoviesForHome(likedMoviesArray, likedMoviesContainer, { lazyLoading: true, clean: true });
+}
+
+async function getLanguages() {
+    const { data } = await apiBaseURL("configuration/languages");
+    const languages = data;
+    const selectedNames = languages.filter((language) => language.english_name === "English" ||language.english_name === "Spanish");
+    console.log(selectedNames);
+    if (!localStorage.getItem("languages")) {
+        localStorage.setItem("languages", JSON.stringify(selectedNames));        
+    }
+}
+
+function translations () {    
+    const langs =  [
+        {
+            lang: 'es',
+            backButton: 'Volver',
+            dropdownMenuCaptions: 
+            {
+                home: 'Inicio',
+                trends: 'Tendencias',
+                categories: 'Categorías ⬇️',
+                upcoming: 'Próximamente',
+                search: 'Búsqueda',
+                favoriteMovies: 'Peliculas Favoritas',
+                languages: 'Idiomas ⬇️',
+                languagesItems: 
+                {
+                    english: 'Inglés',
+                    spanish: 'Español',
+                },
+            },
+            searchInput: "Busca una película",
+            homePageCaptions: 
+            {
+                trending: 'En Tendencia',
+                seeMoreButton: 'Ver más',
+                upcoming: 'Próximamente',
+                favoriteMovies: 'Películas Favoritas',
+            },
+            footerCaption: "Hecho por santiagoDev 🤖",
+            searchPageCaption: "Buscaste: ",
+            movieDetailsCaptions: {
+                releaseDate: "Fecha de estreno: ",
+                genres: "Géneros: ",
+                rating: "Calificación: ",
+                runtime: "Duración: ",
+                minutes: " minutos",
+                relatedMovies: "Películas Relacionadas",
+            },
+        },
+        {
+            lang: 'en',
+            backButton: 'Back',
+            dropdownMenuCaptions: 
+            {
+                home: 'Home',
+                trends: 'Trends',
+                categories: 'Categories ⬇️',
+                upcoming: 'Upcoming',
+                search: 'Search',
+                favoriteMovies: 'Favorite Movies',
+                languages: 'Languages ⬇️',
+                languagesItems: 
+                {
+                    english: 'English',
+                    spanish: 'Spanish',
+                },
+            },
+            searchInput: "Search for a movie",
+            homePageCaptions: 
+            {
+                trending: 'Trending',
+                seeMoreButton: 'See More',
+                upcoming: 'Upcoming',
+                favoriteMovies: 'Favorite Movies',
+            },
+            footerCaption: "Made by santiagoDev 🤖",
+            searchPageCaption: "You searched for: ",
+            movieDetailsCaptions: {
+                releaseDate: "Release Date: ",
+                genres: "Genres: ",
+                rating: "Rating: ",
+                runtime: "Runtime: ",
+                minutes: " minutes",
+                relatedMovies: "Related Movies",
+            },        
+        },
+    ]
+
+    return langs;
+}
+
+function changeLanguage(languageIsoCode) {
+    console.log(languageIsoCode);
+    const languageList = JSON.parse(localStorage.getItem("languages"));
+    const selectedLang = languageList.find((language) => language.iso_639_1 === languageIsoCode);
+    console.log(selectedLang);
+    const translationList = translations();
+    console.log(translationList);
+
+    translationList.forEach((item) => {
+        if(item.lang === selectedLang.iso_639_1) {
+            preferredLanguage = selectedLang.iso_639_1;
+            //Header
+            homeLink.textContent = item.dropdownMenuCaptions.home;
+            trendsLink.textContent = item.dropdownMenuCaptions.trends;
+            categoriesLink.textContent = item.dropdownMenuCaptions.categories;
+            upcomingLink.textContent = item.dropdownMenuCaptions.upcoming;
+            searchLink.textContent = item.dropdownMenuCaptions.search;
+            favoritesLink.textContent = item.dropdownMenuCaptions.favoriteMovies;
+            languageLink.textContent = item.dropdownMenuCaptions.languages;
+            
+            // Actualizar los textos dentro de languageArticle
+            const languageItem = document.querySelectorAll(".language-item__text");
+            
+            languageItem.forEach(element => {
+                console.log(element);
+                const language = element.getAttribute("iso-code");
+                const languageName = language === "en" ? "english" : "spanish";
+                element.textContent = item.dropdownMenuCaptions.languagesItems[languageName];
+            });
+            
+            //Search
+            searchInput.placeholder = item.searchInput;
+            
+            //HomePage
+            trendingTitle.textContent = item.homePageCaptions.trending;
+            trendingButton.textContent = item.homePageCaptions.seeMoreButton;
+            upcomingTitle.textContent = item.homePageCaptions.upcoming;
+            upcomingButton.textContent = item.homePageCaptions.seeMoreButton;
+            favoriteTitle.textContent = item.homePageCaptions.favoriteMovies;
+            console.log(favoriteTitle);
+            
+            //Footer
+            footerCaption.textContent = item.footerCaption;
+    
+            //Back button
+            backButton.textContent = item.backButton;
+            backButtonIcon.src = "./../images/previous.png";
+            backButton.appendChild(backButtonIcon);
+    
+            // Actualizar el idioma en la configuración de axios
+            apiBaseURL.defaults.params.language = preferredLanguage;
+
+            // Volviendo a cargar los posters y la información de las películas con el idioma actualizado del navegador segun la pagina actual            
+            //PAGES
+            if(location.hash.startsWith("#trends")) {
+                titlePage.textContent = item.homePageCaptions.trending;
+                getTrendingMovies();
+                getCategoriesPreview();
+            } else if(location.hash.startsWith("#category")) {
+                const [_, movieId] = location.hash.split("=");
+                console.log(movieId);
+                
+                const category = movieId.split("-");
+                console.log(category);
+                location.hash = `#category=${category[0]}-${category[1]}`;
+                                
+                titlePage.textContent = category[1];
+                getMoviesByCategory(category[0]);
+                getCategoriesPreview();
+
+            } else if(location.hash.startsWith("#search")) {
+                const [_, query] = location.hash.split("=");
+                const formattedQuery = decodeURI(query);
+                titlePage.textContent = `${item.searchPageCaption}${formattedQuery}`;
+                getMoviesBySearch(query);
+                getCategoriesPreview();
+            } else if(location.hash.startsWith("#movie")) {
+                movieDetailsRelatedMoviesTitle.textContent = item.movieDetailsCaptions.relatedMovies;
+                movieDetailsReleaseDate.textContent = `${item.movieDetailsCaptions.releaseDate}`;
+                movieDetailsGenres.textContent = `${item.movieDetailsCaptions.genres}`;
+                movieDetailsRating.textContent = `${item.movieDetailsCaptions.rating}`;
+                movieDetailsRuntime.textContent = `${item.movieDetailsCaptions.runtime}`;
+                getMovieById(location.hash.split("=")[1]);
+                getCategoriesPreview();
+            } else if(location.hash.startsWith("#home")) {
+                getTrendingMoviesPreview();
+                getCategoriesPreview();
+                getUpcomingMoviesPreview();
+                getLikedMovies();
+            }
+        }
+    });    
 }

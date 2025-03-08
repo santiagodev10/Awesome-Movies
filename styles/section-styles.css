@@ -78,7 +78,7 @@
 }
 
 .movie-details__info-container {
-    max-height: 380px;
+    /* max-height: 380px; */
     display: flex;
     flex-direction: column;
     gap: 10px;

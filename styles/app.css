@@ -50,6 +50,11 @@ nav .nav-links-container {
     cursor: pointer;
 }
 
+.nav-links__li-container {
+    border-bottom: 1px solid var(--middle-blue);
+    padding-bottom: 1px;
+}
+
 .menu-icon {
     width: 35px;
     height: 3px;
@@ -70,16 +75,26 @@ nav .nav-links-container {
     transform: translate(0, -8px) rotate(45deg);
 }
 
-nav .nav-links {
+.close-icon {
+    width: 35px;
+    height: 3px;
+    background-color: var(--middle-blue);
+    margin: 6px 0;
+}
+
+.nav-links {
     width: 78%;
     min-height: 160px;
     max-height: 320px;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 20px;
-    padding: 10px;
+    padding: 10px 10px 15px 10px;
     border-top: white 2px solid;
     border-radius: 10px;
-    background-color: rgb(98, 0, 255);
+    background-color: var(--dark-blue);
     overflow-y: scroll;
 }
 
@@ -98,6 +113,7 @@ nav .search {
 
 nav .search__close {
     grid-column: 3;
+    grid-row: 1;
 }
 
 nav .search__input {
@@ -201,7 +217,15 @@ main {
 
 /*CATEGORIES SECTION HOME*/
 
-.categories {
+/* .categories {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+} */
+
+.dropdown-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -215,7 +239,16 @@ main {
     text-align: center;
 }
 
-.categories__categories-container {   
+/* .categories__categories-container {   
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(70px, 1fr));
+    padding: 10px;
+    color: white;
+    gap: 20px;
+} */
+
+.dropdown-list {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(70px, 1fr));
@@ -224,7 +257,7 @@ main {
     gap: 20px;
 }
 
-.categories-container__category {
+/* .categories-container__category {
     width: 80px;
     display: flex;
     align-items: center;
@@ -232,9 +265,27 @@ main {
     gap: 5px;
     border: 1px solid black;
     padding: 2px;
+} */
+
+.dropdown-item {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+    background-color: slateblue;
 }
 
-.categories-container__title {
+/* .categories-container__title {
+    font-size: 1.2rem;
+    color: white;
+    text-align: center;
+} */
+
+.dropdown-item-title {
     font-size: 1.2rem;
     color: white;
     text-align: center;
@@ -303,7 +354,7 @@ footer p {
 
 .see-more-button {
     border: none;
-    padding: 5px;
+    padding: 6px;
     border-radius: 15px;
     background: var(--dark-blue);
     color: white;
@@ -343,6 +394,14 @@ footer p {
 
 .inactive {
     display: none;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.show {
+    visibility: show;
 }
 
 /*LOADING SKELETONS*/
