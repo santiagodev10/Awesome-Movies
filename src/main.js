@@ -530,7 +530,6 @@ function changeLanguage(languageIsoCode) {
     
             //Back button
             backButton.textContent = item.backButton;
-            backButtonIcon.src = "./../images/previous.png";
             backButton.appendChild(backButtonIcon);
     
             // Actualizar el idioma en la configuración de axios
