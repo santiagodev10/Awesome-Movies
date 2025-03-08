@@ -568,7 +568,7 @@ function changeLanguage(languageIsoCode) {
                 movieDetailsRuntime.textContent = `${item.movieDetailsCaptions.runtime}`;
                 getMovieById(location.hash.split("=")[1]);
                 getCategoriesPreview();
-            } else if(location.hash.startsWith("#home")) {
+            } else {
                 getTrendingMoviesPreview();
                 getCategoriesPreview();
                 getUpcomingMoviesPreview();
